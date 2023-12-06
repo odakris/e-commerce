@@ -1,3 +1,113 @@
+:root {
+    --navbar-head-height: 8rem;
+    --auth-padding-left: 8rem;
+    --auth-icon-size: 3rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: Blinker, Helvetica, Arial, sans-serif;
+    border: 1px solid black;
+}
+
+/* RECURRENT CLASSES */
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GENERAL */
+html {
+    display: block;
+    font-size: 10px;
+}
+
 body {
-    padding: 10px;
+    display: block;
+    min-height: 100vh;
+    font-size: 1.6rem;
+}
+
+/* NAVBAR */
+.navbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid grey;
+}
+
+.navbar-head h1 {
+    font-size: 4.5rem;
+    color: rgb(128, 0, 0);
+    padding: 0 3rem;
+}
+
+.navbar-head {
+    width: 100%;
+    height: var(--navbar-head-height);
+    justify-content: space-between;
+}
+
+.navbar-link {
+    display: block;
+}
+
+.nav-item {
+    display: inline-block;
+    margin: 1rem;
+}
+
+/* NAVBAR AUTH COLLAPSE */
+.authentication {
+    height: 100%;
+    padding: 0 var(--auth-padding-left);
+}
+
+.authentication input {
+    display: none;
+}
+
+.authentication label {
+    cursor: pointer;
+    overflow: hidden;
+    margin-left: 3rem;
+}
+
+.auth-collapse-content {
+    flex-direction: column;
+    max-height: 0;
+    position: absolute;
+    top: calc(var(--navbar-head-height) - var(--navbar-head-height)/2);
+    right: calc(var(--auth-padding-left) - var(--auth-icon-size) + 0.5rem);
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    overflow: hidden;
+    /* z-index: 100; */
+}
+
+.authentication input:checked~.auth-collapse-content {
+    max-height: 600px;
+    max-width: 600px;
+    top: var(--navbar-head-height);
+    border: 1px solid black;
+    opacity: 1;
+}
+
+.fa-circle-user,
+.fa-chevron-up {
+    font-size: var(--auth-icon-size);
+}
+
+/* CONTAINER */
+.container {
+    display: block;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 15rem 2rem;
 }
