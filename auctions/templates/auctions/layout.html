@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    <title>{% block title %}eBuyIt{% endblock %}</title>
+    <title>{% block title %}eBuy{% endblock %}</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
@@ -14,52 +14,59 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="navbar-head flex">
-            <h1>eBuyIt</h1>
-
-            <div class="authentication flex">
-                {% if user.is_authenticated %}
-                <p>Signed in as <strong>{{ user.username }}</strong>.</p>
-                {% else %}
-                <p>Not signed in.</p>
-                {% endif %}
-                <input type="checkbox" id="auth-collapse-head">
-                <label for="auth-collapse-head">
-                    <i class="fa-solid fa-circle-user"></i>
-                </label>
-                <div class="auth-collapse-content flex">
-                    <i class="fa-solid fa-chevron-up"></i>
+    <div class="wrapper flex">
+        <div class="navbar">
+            <div class="navbar-head flex">
+                <h1><a href="{% url 'auctions:index' %}">eBuy</a></h1>
+                <div class="authentication flex">
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
+                    <p>Signed in as <strong>{{ user.username }}</strong>.</p>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
+                    <p>Not signed in.</p>
                     {% endif %}
+                    <input type="checkbox" id="auth-collapse-head">
+                    <label for="auth-collapse-head">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </label>
+                    <div class="auth-collapse-content flex">
+                        <i class="fa-solid fa-chevron-up"></i>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auctions:logout' %}">Log Out</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auctions:login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auctions:register' %}">Register</a>
+                        </li>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+            <div class="navbar-links">
+                <ul class="nav flex">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'auctions:index' %}">Active Listings</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="navbar-links">
-            <ul class="nav flex">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-                </li>
-            </ul>
+
+        <hr>
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+        <div class="flex footer media-query-footer">
+            <p><a href="https://cs50.harvard.edu/web/2020/projects/2/commerce/" target="_blank">Project 2 - Commerce</a>
+            </p>
+            <p><a href="https://www.youtube.com/watch?v=Nn7EX3zkGUo&list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu"
+                    target="_blank">CS50’s Web Programming with Python and JavaScript</a></p>
+            <p>Created by <a href="https://github.com/odakris?tab=repositories" target="_blank">odakris</a></p>
         </div>
     </div>
-
-    <hr>
-    <div class="container">
-        {% block body %}
-        {% endblock %}
-    </div>
-
 </body>
 
 </html>
