@@ -111,8 +111,8 @@ body,
 }
 
 .authentication input:checked~.auth-collapse-content {
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 15rem;
+    /* max-width: 10rem; */
     top: var(--navbar-head-height);
     border: 1px solid black;
     opacity: 1;
@@ -131,7 +131,7 @@ body,
     padding: 20rem 2rem 5rem 2rem;
 }
 
-/* LOGIN / REGISTER*/
+/* LOGIN - REGISTER */
 .connection {
     flex-direction: column;
 }
@@ -163,24 +163,5 @@ body,
     width: 100%;
     height: var(--footer-height);
     margin-top: auto;
+    border-top: 1px solid black;
 }
-
-/* .footer p {
-    margin: 0.5rem;
-} */
-
-/* .footer>p,
-.footer>p>a {
-    color: #acacac;
-    font-size: 1.5rem;
-}
-
-.footer a:hover {
-    color: #797979;
-}
-
-.footer p {
-    text-align: center;
-    margin: 0;
-    padding: 0.2em;
-} */
