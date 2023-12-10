@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<p>Sell</p>
+
+<div class="sell">
+    <form action="{% url 'auctions:sell' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ sell_form }}
+        <input type="submit" value="Sell" class="btn">
+    </form>
+</div>
+
+
+{% endblock%}
