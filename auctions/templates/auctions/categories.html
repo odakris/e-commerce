@@ -2,4 +2,16 @@
 
 {% block body %}
 <p>Categories</p>
+
+<div class="categories">
+    <ul class="nav-categories flex">
+        {% for category in categories %}
+        <li class="nav-categories-item">
+            <a class="nav-categories-link" href="{% url 'auctions:index' %}">{{ category }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
 {% endblock%}
