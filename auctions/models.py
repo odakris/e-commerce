@@ -1,9 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from . import utils
 
 class User(AbstractUser):
     pass
+
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
@@ -14,7 +16,14 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.name}"
     
+    
 class Auction(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller")
     title = models.CharField(max_length=32)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
-    description = models.CharField(max_length=1200)
+    description = models.TextField(max_length=1200)
+    upload = models.FileField(upload_to=utils.user_directory_path)
+
+
+    def __str__(self):
+        return f"{self.title} by {self.seller}"
