@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 
 # Configure DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+MEDIA_ROOT = 'media'
