@@ -1,15 +1,17 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<p>Sell</p>
-
-<div class="sell">
-    <form action="{% url 'auctions:sell' %}" method="POST" enctype="multipart/form-data">
+<div class="sell flex">
+    <h2>Complete your listing</h2>
+    <form action="{% url 'auctions:sell' %}" method="POST" enctype="multipart/form-data" class="sell-form flex">
         {% csrf_token %}
-        {{ sell_form }}
+        {% for field in sell_form %}
+        <div class="sell-form-item">
+            <label class="sell-label">{{ field.label }}</label>
+            <div class="sell-input">{{ field }}</div>
+        </div>
+        {% endfor %}
         <input type="submit" value="Sell" class="btn">
     </form>
 </div>
-
-
 {% endblock%}
