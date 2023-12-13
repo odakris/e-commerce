@@ -22,8 +22,16 @@ class Auction(models.Model):
     title = models.CharField(max_length=32)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
     description = models.TextField(max_length=1200)
-    upload = models.FileField(upload_to=utils.user_directory_path)
-
+    # upload = models.FileField(upload_to=utils.user_directory_path)
 
     def __str__(self):
         return f"{self.title} by {self.seller}"
+    
+class ImagesUpload(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller_img")
+    title = models.CharField(max_length=32)
+    upload = models.FileField(upload_to=utils.user_directory_path)
+
+    def __str__(self):
+        return f"Images for {self.title}"
+    
