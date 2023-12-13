@@ -33,5 +33,5 @@ class ImagesUpload(models.Model):
     upload = models.FileField(upload_to=utils.user_directory_path)
 
     def __str__(self):
-        return f"Images for {self.title}"
+        return f"Images for {self.title} item from {self.seller}"
     
