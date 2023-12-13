@@ -11,7 +11,42 @@
             <div class="sell-input">{{ field }}</div>
         </div>
         {% endfor %}
+        <div class="sell-form-item">
+            <label class="sell-label">PHOTOS</label>
+            <div class="sell-input">
+                <input type="file" name="img-upload" class="img-file-btn" accept="image/*" multiple="multiple">
+            </div>
+        </div>
+        <div class="queued-images flex"></div>
         <input type="submit" value="Sell" class="btn">
     </form>
 </div>
+
+<script>
+    imgFileBtn = document.querySelector(".img-file-btn");
+    queuedImages = document.querySelector(".queued-images");
+    let ImagesArray = [];
+
+    imgFileBtn.addEventListener("change", () => {
+        ImagesArray = []
+        const imagesFiles = imgFileBtn.files;
+        console.log(imgFileBtn.files)
+        for (i = 0; i < imagesFiles.length; i++) {
+            ImagesArray.push(imagesFiles[i]);
+        }
+        displayImages();
+    })
+
+    console.log("ImagesArray:", ImagesArray);
+
+    const displayImages = () => {
+        let images = ""
+        ImagesArray.forEach((image, index) => {
+            images += `<div class="uploaded-image flex">
+                            <img src="${URL.createObjectURL(image)}" alt="uploaded_image">
+                       </div>`;
+        })
+        queuedImages.innerHTML = images;
+    }
+</script>
 {% endblock%}
