@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Auction
+from .models import User, Category, Auction, ImagesUpload
 from .forms import SellForm
 
 
@@ -74,30 +74,33 @@ def sell(request):
     sell_form = SellForm()
 
     if request.method == "POST":
-        sell_form = SellForm(request.POST, request.FILES)
+        sell_form = SellForm(request.POST)
         if sell_form.is_valid():
             title = sell_form.cleaned_data["title"]
             category = sell_form.cleaned_data["category"]
-            print(f"CATEGORY SELL: {category}")
             description = sell_form.cleaned_data["description"]
-            upload = sell_form.cleaned_data["upload"]
 
+            for image in request.FILES.getlist("img-upload"):
+                new_img = ImagesUpload(
+                    seller = request.user,
+                    title = title,
+                    upload = image
+                )
+                new_img.save()
 
             new_auction = Auction(
                 seller = request.user,
                 title = title,
                 category = Category.objects.get(pk = category),
                 description = description,
-                upload = upload
             )
-
             new_auction.save()
 
             return HttpResponseRedirect(reverse("auctions:index"))
 
 
     return render(request, "auctions/sell.html", {
-        "sell_form": sell_form 
+        "sell_form": sell_form,
     })
 
 
