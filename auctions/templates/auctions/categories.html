@@ -1,8 +1,6 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<p>Categories</p>
-
 <div class="categories">
     <ul class="nav-categories flex">
         {% for category in categories %}
@@ -11,6 +9,18 @@
         </li>
         {% endfor %}
     </ul>
+
+    <div class="items-container">
+        {% for auction in auctions %}
+        <div class="item">
+            <h3>{{ auction.title }}</h3>
+            <p>{{ auction.category }}</p>
+            <p>{{ auction.description }}</p>
+            <p>{{ auction.seller }}</p>
+            {{ images.upload }}
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
 
