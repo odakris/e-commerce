@@ -80,14 +80,6 @@ def sell(request):
             category = sell_form.cleaned_data["category"]
             description = sell_form.cleaned_data["description"]
 
-            for image in request.FILES.getlist("img-upload"):
-                new_img = ImagesUpload(
-                    seller = request.user,
-                    title = title,
-                    upload = image
-                )
-                new_img.save()
-
             new_auction = Auction(
                 seller = request.user,
                 title = title,
@@ -95,6 +87,14 @@ def sell(request):
                 description = description,
             )
             new_auction.save()
+
+            for image in request.FILES.getlist("img-upload"):
+                new_img = ImagesUpload(
+                    seller = request.user,
+                    auction = new_auction,
+                    upload = image
+                )
+                new_img.save()
 
             return HttpResponseRedirect(reverse("auctions:index"))
 
