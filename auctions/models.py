@@ -29,9 +29,9 @@ class Auction(models.Model):
     
 class ImagesUpload(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller_img")
-    title = models.CharField(max_length=32)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="auction_img", null=True)
     upload = models.FileField(upload_to=utils.user_directory_path)
 
     def __str__(self):
-        return f"Images for {self.title} item from {self.seller}"
+        return f"Images for {self.auction} item from {self.seller}"
     
