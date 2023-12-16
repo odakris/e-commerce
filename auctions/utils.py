@@ -1,8 +1,8 @@
 from . import models
 
 def user_directory_path(instance, filename):
-    # fill will be uploaded to MEDIA_ROOT/user_<id>/<filemane>
-    return 'user_{0}_{1}/item_{2}/{3}'.format(instance.seller.pk, instance.seller, instance.title, filename)
+    # fill will be uploaded to MEDIA_ROOT/user_<id>/item_<id>/<filename>
+    return 'user_{0}/item_{1}/{2}'.format(instance.seller.pk, instance.auction.pk, filename)
 
 def all_categories():
     choices = []
