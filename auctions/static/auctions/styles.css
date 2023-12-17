@@ -210,6 +210,12 @@ body,
     resize: none;
 }
 
+.sell input[type="number"] {
+    margin: 0;
+    max-width: 20rem;
+    width: 100%;
+}
+
 .sell input[type="file"] {
     width: 100%;
     border: 1px solid black;
