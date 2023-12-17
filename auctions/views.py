@@ -83,7 +83,6 @@ def categories(request):
     })
 
 
-
 def sell(request):
     sell_form = SellForm()
 
