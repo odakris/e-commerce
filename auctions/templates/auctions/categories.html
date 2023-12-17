@@ -2,22 +2,37 @@
 
 {% block body %}
 <div class="categories">
+    <h1>{{ title|upper }}</h1>
     <ul class="nav-categories flex">
+        <a class="nav-categories-link" href="{% url 'auctions:categories' %}">
+            <li class="nav-categories-item">{{ title }}</li>
+        </a>
         {% for category in categories %}
-        <li class="nav-categories-item">
-            <a class="nav-categories-link" href="{% url 'auctions:index' %}">{{ category }}</a>
-        </li>
+        <a class="nav-categories-link" href="{% url 'auctions:index' %}">
+            <li class="nav-categories-item">{{ category }}</li>
+        </a>
         {% endfor %}
     </ul>
 
     <div class="items-container">
         {% for auction in auctions %}
-        <div class="item">
-            <h3>{{ auction.title }}</h3>
-            <p>{{ auction.category }}</p>
-            <p>{{ auction.description }}</p>
-            <p>{{ auction.seller }}</p>
-            {{ images.upload }}
+        <div id="{{ auction.pk }}" class="item flex">
+            <div class="item-img">
+                {% for image in images %}
+                {% if image.auction.pk == auction.pk %}
+                <img src="{{ image.upload.url }}">
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="item-details">
+                <h3 class="item-title">{{ auction.title }}</h3>
+                <div class="item-price flex">
+                    <p>Add Price $</p>
+                    <p>Number of bid</p>
+                </div>
+            </div>
+
+
         </div>
         {% endfor %}
     </div>
