@@ -7,6 +7,8 @@ from django.urls import reverse
 from .models import User, Category, Auction, ImagesUpload
 from .forms import SellForm
 
+import re
+
 
 def index(request):
     return render(request, "auctions/index.html")
@@ -65,9 +67,21 @@ def register(request):
 
 
 def categories(request):
+    images = []
+    auction_pk = []
+
+    for img_item in ImagesUpload.objects.all():
+        if img_item.auction.pk not in auction_pk:
+                images.append(img_item)
+                auction_pk.append(img_item.auction.pk)
+    
     return render(request, "auctions/categories.html", {
-        "categories": Category.objects.all()
+        "title": "All",
+        "categories": Category.objects.all(),
+        "auctions": Auction.objects.all(),
+        "images": images
     })
+
 
 
 def sell(request):
