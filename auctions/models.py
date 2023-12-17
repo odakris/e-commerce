@@ -22,6 +22,8 @@ class Auction(models.Model):
     title = models.CharField(max_length=32)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
     description = models.TextField(max_length=1200)
+    starting_bid = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bid_counter = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.title} by {self.seller}"
@@ -29,8 +31,17 @@ class Auction(models.Model):
 class ImagesUpload(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller_img")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="auction_img", null=True)
-    upload = models.FileField(upload_to=utils.user_directory_path)
+    upload = models.FileField(upload_to=utils.user_directory_path, null=True)
 
     def __str__(self):
         return f"{self.upload}"
     
+
+class Bid(models.Model):
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bidder")
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="auction_bid")
+    bid_date = models.DateTimeField()
+    bid = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.bid} on {self.auction}"
