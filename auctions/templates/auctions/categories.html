@@ -27,8 +27,14 @@
             <div class="item-details">
                 <h3 class="item-title">{{ auction.title }}</h3>
                 <div class="item-price flex">
-                    <p>Add Price $</p>
-                    <p>Number of bid</p>
+                    <p>{{ auction.starting_bid }} $</p>
+                    {% if auction.bid_counter == 0 %}
+                    <p>No bids yet</p>
+                    {% elif auction.bid_counter == 1 %}
+                    <p>{{ auction.bid_counter }} bid</p>
+                    {% else %}
+                    <p>{{ auction.bid_counter }} bids</p>
+                    {% endif %}
                 </div>
             </div>
 
