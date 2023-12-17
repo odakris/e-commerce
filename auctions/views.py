@@ -92,12 +92,14 @@ def sell(request):
             title = sell_form.cleaned_data["title"]
             category = sell_form.cleaned_data["category"]
             description = sell_form.cleaned_data["description"]
+            starting_bid = sell_form.cleaned_data["starting_bid"]
 
             new_auction = Auction(
                 seller = request.user,
                 title = title,
                 category = Category.objects.get(pk = category),
                 description = description,
+                starting_bid = starting_bid
             )
             new_auction.save()
 
