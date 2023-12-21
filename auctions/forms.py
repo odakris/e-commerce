@@ -7,3 +7,7 @@ class SellForm(forms.Form):
     category = forms.ChoiceField(label="CATEGORY", required=True, choices=utils.all_categories())
     description = forms.CharField(label="DESCRIPTION", required=True, widget=forms.Textarea(attrs={"placeholder": "Write a detailed description of your item"}))
     starting_bid = forms.DecimalField(label="STARTING PRICE", required=True, widget=forms.NumberInput(attrs={"min": 1, "class": "form-control", "placeholder": "$", "autocomplete": "off"}))
+
+
+class BidForm(forms.Form):
+    bid = forms.DecimalField(label="BID", widget=forms.NumberInput(attrs={"min": 1, "class": "form-control", "placeholder": "$", "autocomplete": "off"}))
