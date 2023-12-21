@@ -5,12 +5,10 @@
 
     <div class="auction">
         <div class="auction-images">
-            <div class="auction-images-big">
-                <img src="" alt="">
-            </div>
+            <div class="auction-images-big"></div>
             <div class="auction-images-small flex">
                 {% for image in images %}
-                <img src="{{ image.upload.url }}">
+                <img src="{{ image.upload.url }}" alt="{{ image.upload.url }}">
                 {% endfor %}
             </div>
 
@@ -23,7 +21,7 @@
             <!-- <div class="auction-creation-date">{{ auction.creation_date }}</div> ADD CREATION DATE TO AUCTION FROM -->
             <div class="auction-bid flex">
                 <div class="auction-bid-details flex">
-                    <div class="auction-current-bid">{{ auction.bid }}</div>
+                    <div class="auction-current-bid">{{ auction.bid }} $</div>
                     <div class="auction-bid-counter">
                         {% if auction.bid_counter == 0 %}
                         <p>No bids yet</p>
@@ -43,13 +41,19 @@
                 <div class="error-msg">{{ message }}</div>
                 {% endif %}
             </div>
-
-
-
-
         </div>
     </div>
-
 </div>
 
+<script>
+    auctionImagesBig = document.querySelector(".auction-image-big")
+    auctionImagesSmall = document.querySelector(".auction-images-small")
+
+    auctionImagesSmall.addEventListener("hover", () => {
+        console.log("HOVER")
+    })
+    // const displayBigImage = () => {
+    //     bigImage =
+    // }
+</script>
 {% endblock %}
