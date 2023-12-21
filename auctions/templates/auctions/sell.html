@@ -43,7 +43,7 @@
         let images = ""
         ImagesArray.forEach((image, index) => {
             images += `<div class="uploaded-image flex">
-                            <img src="${URL.createObjectURL(image)}" alt="uploaded_image">
+                            <img src="${URL.createObjectURL(image)}" alt="${URL.createObjectURL(image)}">
                        </div>`;
         })
         queuedImages.innerHTML = images;
