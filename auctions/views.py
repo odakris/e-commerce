@@ -164,7 +164,7 @@ def auction(request, auction_id):
                 new_bid.save()
 
                 current_auction.bid = bid
-                current_auction.bid_counter = Bid.objects.filter(auction=current_auction).max_length()
+                current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
                 print(f"current_auction.bid_counter: {current_auction.bid_counter}")
                 current_auction.save()
 
