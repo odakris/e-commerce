@@ -4,10 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Auction, ImagesUpload
-from .forms import SellForm
+from django.db.models import OuterRef, Subquery
 
-import re
+from .models import User, Category, Auction, ImagesUpload, Bid
+from .forms import SellForm, BidForm
+
+from commerce.settings import MEDIA_URL
 
 
 def index(request):
@@ -81,6 +83,23 @@ def categories(request):
         "auctions": Auction.objects.all(),
         "images": images
     })
+    
+# def categories(request):
+#     auctions_with_images = Auction.objects.annotate(
+#         first_image=Subquery(
+#             ImagesUpload.objects.filter(auction=OuterRef('pk')).values('upload')[:1]
+#         )
+#     )
+
+#     for auction in auctions_with_images:
+#         print(auction.first_image)
+
+#     return render(request, "auctions/categories.html", {
+#         "title": "All",
+#         "categories": Category.objects.all(),
+#         "auctions": auctions_with_images,
+#         "MEDIA_URL": MEDIA_URL
+#     })
 
 
 def sell(request):
@@ -99,7 +118,7 @@ def sell(request):
                 title = title,
                 category = Category.objects.get(pk = category),
                 description = description,
-                starting_bid = starting_bid
+                bid = starting_bid
             )
             new_auction.save()
 
@@ -116,6 +135,51 @@ def sell(request):
 
     return render(request, "auctions/sell.html", {
         "sell_form": sell_form,
+    })
+
+
+def auction(request, auction_id):
+    bid_form = BidForm()
+    current_auction = Auction.objects.get(pk=auction_id)
+    images = ImagesUpload.objects.filter(auction=current_auction)
+
+    if request.method == "POST":
+        bid_form = BidForm(request.POST)
+        if bid_form.is_valid():
+            bid = bid_form.cleaned_data["bid"]
+
+            if bid <= current_auction.bid:
+                return render(request, "auctions/auction.html", {
+                    "bid_form": bid_form,
+                    "auction": current_auction,
+                    "message": "Bid must be higher than current bid"
+                })
+            else: 
+                new_bid = Bid(
+                    bidder = request.user,
+                    auction = current_auction,
+                    bid = bid,
+                    # bid_date = "YYYY-MM-DD HH:MM" ADD CURRENT BID DATE
+                )
+                new_bid.save()
+
+                current_auction.bid = bid
+                current_auction.bid_counter = Bid.objects.filter(auction=current_auction).max_length()
+                print(f"current_auction.bid_counter: {current_auction.bid_counter}")
+                current_auction.save()
+
+                return render(request, "auctions/auction.html", {
+                    "bid_form": bid_form,
+                    "auction": current_auction,
+                    "images": images,
+                    "message": "Bid placed !"
+                })
+    
+
+    return render(request, "auctions/auction.html", {
+        "bid_form": bid_form,
+        "auction": current_auction,
+        "images": images
     })
 
 
