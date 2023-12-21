@@ -1,0 +1,55 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="auction-container flex">
+
+    <div class="auction">
+        <div class="auction-images">
+            <div class="auction-images-big">
+                <img src="" alt="">
+            </div>
+            <div class="auction-images-small flex">
+                {% for image in images %}
+                <img src="{{ image.upload.url }}">
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="auction-details flex">
+            <h1>{{ auction.title }}</h1>
+            <div class="auction-description">{{ auction.description }}</div>
+            <div class="auction-category">{{ auction.category }}</div>
+            <div class="auction-seller">{{ auction.seller }}</div>
+            <!-- <div class="auction-creation-date">{{ auction.creation_date }}</div> ADD CREATION DATE TO AUCTION FROM -->
+            <div class="auction-bid flex">
+                <div class="auction-bid-details flex">
+                    <div class="auction-current-bid">{{ auction.bid }}</div>
+                    <div class="auction-bid-counter">
+                        {% if auction.bid_counter == 0 %}
+                        <p>No bids yet</p>
+                        {% elif auction.bid_counter == 1 %}
+                        <p>{{ auction.bid_counter }} bid</p>
+                        {% else %}
+                        <p>{{ auction.bid_counter }} bids</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-bid-form flex">
+                    {% csrf_token %}
+                    {{ bid_form }}
+                    <input type="submit" value="Place Bid" class="btn">
+                </form>
+                {% if message %}
+                <div class="error-msg">{{ message }}</div>
+                {% endif %}
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
