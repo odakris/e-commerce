@@ -5,20 +5,17 @@
 
     <div class="auction">
         <div class="auction-images">
-            <div class="auction-images-big"></div>
+            <div class="auction-images-big flex">
+                <img src="{{ images.first.upload.url }}" alt="{{ images.first.upload.url.first }}">
+            </div>
             <div class="auction-images-small flex">
                 {% for image in images %}
-                <img src="{{ image.upload.url }}" alt="{{ image.upload.url }}">
+                <img src="{{ image.upload.url }}" alt="{{ image.upload.url }}" class="small-img">
                 {% endfor %}
             </div>
-
         </div>
         <div class="auction-details flex">
             <h1>{{ auction.title }}</h1>
-            <div class="auction-description">{{ auction.description }}</div>
-            <div class="auction-category">{{ auction.category }}</div>
-            <div class="auction-seller">{{ auction.seller }}</div>
-            <div class="auction-creation-date">{{ auction.creation_date }}</div>
             <div class="auction-bid flex">
                 <div class="auction-bid-details flex">
                     <div class="auction-current-bid">{{ auction.bid }} $</div>
@@ -41,19 +38,39 @@
                 <div class="error-msg">{{ message }}</div>
                 {% endif %}
             </div>
+            <div class="auction-description auction-detail">
+                <p class="auction-label">Description :</p>
+                <p class="auction-content">{{ auction.description }}</p>
+            </div>
+            <div class="auction-category auction-detail">
+                <p class="auction-label">Category : </p>
+                <p class="auction-content">{{ auction.category }}</p>
+            </div>
+            <div class="auction-seller auction-detail">
+                <p class="auction-label">Seller : </p>
+                <p class="auction-content">{{ auction.seller }}</p>
+            </div>
+            <div class="auction-creation-date auction-detail">
+                <p class="auction-label">Online since : </p>
+                <p class="auction-content">{{ auction.creation_date }}</p>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    auctionImagesBig = document.querySelector(".auction-image-big")
-    auctionImagesSmall = document.querySelector(".auction-images-small")
+    const auctionImagesBig = document.querySelector(".auction-images-big")
+    const smallImg = document.querySelectorAll(".small-img")
 
-    auctionImagesSmall.addEventListener("hover", () => {
-        console.log("HOVER")
-    })
-    // const displayBigImage = () => {
-    //     bigImage =
-    // }
+    const displayImage = (e) => {
+        let bigImages = ""
+        // console.log(e.currentTarget.src)
+        bigImages = `<img src="${e.currentTarget.src}" alt="${e.currentTarget.src}">`
+        auctionImagesBig.innerHTML = bigImages;
+    }
+
+    smallImg.forEach(e => {
+        e.addEventListener('mouseover', displayImage)
+    });
 </script>
 {% endblock %}
