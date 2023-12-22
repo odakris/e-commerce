@@ -2,13 +2,13 @@
 
 {% block body %}
 <div class="categories">
-    <h1>{{ title|upper }}</h1>
+    <h1>{{ category|upper }}</h1>
     <ul class="nav-categories flex">
         <a class="nav-categories-link" href="{% url 'auctions:categories' %}">
-            <li class="nav-categories-item">{{ title }}</li>
+            <li class="nav-categories-item">{{ all }}</li>
         </a>
         {% for category in categories %}
-        <a class="nav-categories-link" href="{% url 'auctions:index' %}">
+        <a class="nav-categories-link" href="{% url 'auctions:filter' category %}">
             <li class="nav-categories-item">{{ category }}</li>
         </a>
         {% endfor %}
