@@ -94,6 +94,9 @@ def filter(request, filter):
         if img_item.auction.pk not in auction_pk:
                 images.append(img_item)
                 auction_pk.append(img_item.auction.pk)
+
+    if filter == "all":
+        return categories(request)
     
     return render(request, "auctions/categories.html", {
         "all": "All",
