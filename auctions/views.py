@@ -78,9 +78,28 @@ def categories(request):
                 auction_pk.append(img_item.auction.pk)
     
     return render(request, "auctions/categories.html", {
-        "title": "All",
+        "all": "All",
+        "category": "ALL",
         "categories": Category.objects.all(),
         "auctions": Auction.objects.all(),
+        "images": images
+    })
+
+
+def filter(request, filter):
+    images = []
+    auction_pk = []
+
+    for img_item in ImagesUpload.objects.all():
+        if img_item.auction.pk not in auction_pk:
+                images.append(img_item)
+                auction_pk.append(img_item.auction.pk)
+    
+    return render(request, "auctions/categories.html", {
+        "all": "All",
+        "category": filter,
+        "categories": Category.objects.all(),
+        "auctions": Auction.objects.filter(category=Category.objects.get(name=filter)),
         "images": images
     })
     
