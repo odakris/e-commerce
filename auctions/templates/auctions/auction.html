@@ -2,7 +2,6 @@
 
 {% block body %}
 <div class="auction-container flex">
-
     <div class="auction">
         <div class="auction-images">
             <div class="auction-images-big flex">
@@ -14,46 +13,46 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="auction-details flex">
+        <div class="auction-bid flex">
             <h1>{{ auction.title }}</h1>
-            <div class="auction-bid flex">
-                <div class="auction-bid-details flex">
-                    <div class="auction-current-bid">{{ auction.bid }} $</div>
-                    <div class="auction-bid-counter">
-                        {% if auction.bid_counter == 0 %}
-                        <p>No bids yet</p>
-                        {% elif auction.bid_counter == 1 %}
-                        <p>{{ auction.bid_counter }} bid</p>
-                        {% else %}
-                        <p>{{ auction.bid_counter }} bids</p>
-                        {% endif %}
-                    </div>
+            <div class="auction-bid-details flex">
+                <div class="auction-current-bid">{{ auction.bid }} $</div>
+                <div class="auction-bid-counter">
+                    {% if auction.bid_counter == 0 %}
+                    <p>No bids yet</p>
+                    {% elif auction.bid_counter == 1 %}
+                    <p>{{ auction.bid_counter }} bid</p>
+                    {% else %}
+                    <p>{{ auction.bid_counter }} bids</p>
+                    {% endif %}
                 </div>
-                <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-bid-form flex">
-                    {% csrf_token %}
-                    {{ bid_form }}
-                    <input type="submit" value="Place Bid" class="btn">
-                </form>
-                {% if message %}
-                <div class="error-msg">{{ message }}</div>
-                {% endif %}
             </div>
-            <div class="auction-description auction-detail">
-                <p class="auction-label">Description :</p>
-                <p class="auction-content">{{ auction.description }}</p>
-            </div>
-            <div class="auction-category auction-detail">
-                <p class="auction-label">Category : </p>
-                <p class="auction-content">{{ auction.category }}</p>
-            </div>
-            <div class="auction-seller auction-detail">
-                <p class="auction-label">Seller : </p>
-                <p class="auction-content">{{ auction.seller }}</p>
-            </div>
-            <div class="auction-creation-date auction-detail">
-                <p class="auction-label">Online since : </p>
-                <p class="auction-content">{{ auction.creation_date }}</p>
-            </div>
+            <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-bid-form flex">
+                {% csrf_token %}
+                {{ bid_form }}
+                <input type="submit" value="Place Bid" class="btn">
+            </form>
+            {% if message %}
+            <div class="error-msg">{{ message }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="auction-details flex">
+        <div class="auction-description auction-detail">
+            <p class="auction-label">Description :</p>
+            <p class="auction-content">{{ auction.description }}</p>
+        </div>
+        <div class="auction-category auction-detail">
+            <p class="auction-label">Category : </p>
+            <p class="auction-content">{{ auction.category }}</p>
+        </div>
+        <div class="auction-seller auction-detail">
+            <p class="auction-label">Seller : </p>
+            <p class="auction-content">{{ auction.seller }}</p>
+        </div>
+        <div class="auction-creation-date auction-detail">
+            <p class="auction-label">Online since : </p>
+            <p class="auction-content">{{ auction.creation_date }}</p>
         </div>
     </div>
 </div>
