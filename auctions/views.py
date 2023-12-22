@@ -144,36 +144,42 @@ def auction(request, auction_id):
     images = ImagesUpload.objects.filter(auction=current_auction)
 
     if request.method == "POST":
-        bid_form = BidForm(request.POST)
-        if bid_form.is_valid():
-            bid = bid_form.cleaned_data["bid"]
+        if not request.user.is_authenticated: 
+            print(request.user)
+            return render(request, "auctions/login.html")
+        else:
 
-            if bid <= current_auction.bid:
-                return render(request, "auctions/auction.html", {
-                    "bid_form": bid_form,
-                    "auction": current_auction,
-                    "message": "Bid must be higher than current bid"
-                })
-            else: 
-                new_bid = Bid(
-                    bidder = request.user,
-                    auction = current_auction,
-                    bid = bid,
-                    # bid_date = "YYYY-MM-DD HH:MM" ADD CURRENT BID DATE
-                )
-                new_bid.save()
+            print(request.user)
+            
+            bid_form = BidForm(request.POST)
+            if bid_form.is_valid():
+                bid = bid_form.cleaned_data["bid"]
 
-                current_auction.bid = bid
-                current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
-                print(f"current_auction.bid_counter: {current_auction.bid_counter}")
-                current_auction.save()
+                if bid <= current_auction.bid:
+                    return render(request, "auctions/auction.html", {
+                        "bid_form": bid_form,
+                        "auction": current_auction,
+                        "message": "Bid must be higher than current bid"
+                    })
+                else: 
+                    new_bid = Bid(
+                        bidder = request.user,
+                        auction = current_auction,
+                        bid = bid,
+                    )
+                    new_bid.save()
 
-                return render(request, "auctions/auction.html", {
-                    "bid_form": bid_form,
-                    "auction": current_auction,
-                    "images": images,
-                    "message": "Bid placed !"
-                })
+                    current_auction.bid = bid
+                    current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
+                    print(f"current_auction.bid_counter: {current_auction.bid_counter}")
+                    current_auction.save()
+
+                    return render(request, "auctions/auction.html", {
+                        "bid_form": bid_form,
+                        "auction": current_auction,
+                        "images": images,
+                        "message": "Bid placed !"
+                    })
     
 
     return render(request, "auctions/auction.html", {
