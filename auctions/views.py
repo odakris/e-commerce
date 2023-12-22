@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from django.db.models import OuterRef, Subquery
+# from django.db.models import OuterRef, Subquery
 
 from .models import User, Category, Auction, ImagesUpload, Bid
 from .forms import SellForm, BidForm
@@ -13,6 +13,7 @@ from commerce.settings import MEDIA_URL
 
 
 def index(request):
+    print(f"User: {request.user}")
     return render(request, "auctions/index.html")
 
 
@@ -211,4 +212,6 @@ def auction(request, auction_id):
     })
 
 
+def watchlist(request):
+    pass
 
