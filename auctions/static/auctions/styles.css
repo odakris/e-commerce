@@ -13,7 +13,7 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     font-family: Blinker, Helvetica, Arial, sans-serif;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 /* RECURRENT CLASSES */
@@ -325,6 +325,10 @@ input[type="submit"] {
     grid-template-columns: 1fr 1fr;
     /* grid-gap: 2rem; */
     width: 100%;
+    border: 2px solid grey;
+    border-radius: 10px;
+    margin: 2rem 0;
+    padding: 2rem;
 }
 
 .auction-images .auction-images-small img {
@@ -336,11 +340,24 @@ input[type="submit"] {
     margin: 0.2rem;
 }
 
+.auction-images-small {
+    margin-top: 2rem;
+}
+
 .auction-details,
 .auction-bid,
+.auction-bid-details,
 .auction-bid-form {
     flex-direction: column;
     padding: 3rem;
+}
+
+.auction-bid {
+    justify-content: space-evenly;
+}
+
+.auction-details {
+    width: 100%;
 }
 
 .auction-bid-form .btn {
@@ -352,8 +369,9 @@ input[type="submit"] {
     margin: 1rem;
 }
 
-.auction-bid-details {
-    justify-content: space-between;
+.auction-current-bid {
+    font-size: 3rem;
+    margin: 2rem;
 }
 
 .auction-images-big img {
