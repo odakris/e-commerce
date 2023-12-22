@@ -10,4 +10,4 @@ class SellForm(forms.Form):
 
 
 class BidForm(forms.Form):
-    bid = forms.DecimalField(label="BID", widget=forms.NumberInput(attrs={"min": 1, "class": "form-control", "placeholder": "$", "autocomplete": "off"}))
+    bid = forms.DecimalField(label=False, widget=forms.NumberInput(attrs={"min": 1, "class": "form-control", "placeholder": "$", "autocomplete": "off"}))
