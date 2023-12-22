@@ -148,6 +148,7 @@ body,
     height: 4rem;
     margin: 0.8rem;
     border-radius: var(--border-radius);
+    cursor: pointer;
 }
 
 .form-control {
@@ -322,7 +323,7 @@ input[type="submit"] {
 .auction {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
+    /* grid-gap: 2rem; */
     width: 100%;
 }
 
@@ -339,11 +340,37 @@ input[type="submit"] {
 .auction-bid,
 .auction-bid-form {
     flex-direction: column;
+    padding: 3rem;
+}
+
+.auction-bid-form .btn {
+    margin: 1rem 0;
+}
+
+.auction-detail {
+    width: 100%;
+    margin: 1rem;
 }
 
 .auction-bid-details {
     justify-content: space-between;
 }
+
+.auction-images-big img {
+    object-fit: cover;
+    border-radius: 1rem;
+    height: 50rem;
+    width: 50rem;
+    border: 1px dotted grey;
+    margin: 0.2rem;
+}
+
+.auction-label,
+.auction-content {
+    display: inline-block;
+}
+
+
 
 /* .auction-images,
 .auctions-details {
