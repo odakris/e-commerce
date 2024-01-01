@@ -212,6 +212,6 @@ def auction(request, auction_id):
     })
 
 
-def watchlist(request):
-    pass
+def wishlist(request):
+    return render(request, "auctions/wishlist.html")
 
