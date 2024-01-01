@@ -13,7 +13,7 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     font-family: Blinker, Helvetica, Arial, sans-serif;
-    /* border: 1px solid black; */
+    border: 1px solid black;
 }
 
 /* RECURRENT CLASSES */
@@ -127,7 +127,8 @@ body,
 /* CONTAINER */
 .container {
     width: 100%;
-    min-height: calc(100vh - var(--footer-height));
+    /* min-height: calc(100vh - var(--footer-height)); */
+    min-height: 100vh;
     max-width: 120rem;
     padding: 15rem 0 5rem 0;
     margin: 0;
@@ -174,6 +175,7 @@ body,
 .sell-form {
     flex-direction: column;
     max-width: 80rem;
+    margin: auto;
 }
 
 .sell h2 {
@@ -255,6 +257,8 @@ input[type="submit"] {
 /* CATEGORIES */
 .categories {
     flex-direction: column;
+    /* min-height: calc(100vh - var(--footer-height)); */
+    height: 100%;
     width: 100%;
 }
 
@@ -311,6 +315,16 @@ input[type="submit"] {
 .item-price p {
     display: inline-block;
     margin-top: 1rem;
+}
+
+.no-items {
+    width: 100%;
+    height: 100%;
+}
+
+.no-items p {
+    display: block;
+    margin: 2rem 0;
 }
 
 /* AUCTION */
