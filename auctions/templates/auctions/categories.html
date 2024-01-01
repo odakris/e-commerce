@@ -13,7 +13,7 @@
         </a>
         {% endfor %}
     </ul>
-
+    {% if auctions %}
     <div class="items-container">
         {% for auction in auctions %}
         <a href="{% url 'auctions:auction' auction.pk %}">
@@ -41,9 +41,18 @@
                 </div>
             </div>
         </a>
-
         {% endfor %}
     </div>
+    {% else %}
+    <div class="no-items">
+        <h2>Unfortunatly, there is no items for this category yet.</h2>
+        {% if user.is_authenticated %}
+        <p>Want to sell something ? Please click <a href="{% url 'auctions:sell' %}">HERE</a></p>
+        {% else %}
+        <p>Want to sell something ? <a href="{% url 'auctions:login' %}">Sign In</a> and start selling.</p>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 
 
