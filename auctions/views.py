@@ -168,50 +168,54 @@ def auction(request, auction_id):
 
     if request.method == "POST":
         if not request.user.is_authenticated: 
-            print(request.user)
             return render(request, "auctions/login.html")
-        else:
+        else:   
+            if "wishlist" in request.POST:
+                return render(request, "auctions/auction.html", {
+                    "bid_form": bid_form,
+                    "auction": current_auction,
+                    "images": images,
+                    "message": "This item has been added to your wishlist !"
+                })        
+            elif "bid" in request.POST:
+                bid_form = BidForm(request.POST)
 
-            print(request.user)
-            
-            bid_form = BidForm(request.POST)
-            if bid_form.is_valid():
-                bid = bid_form.cleaned_data["bid"]
+                if bid_form.is_valid():
+                    bid = bid_form.cleaned_data["bid"]
 
-                if bid <= current_auction.bid:
-                    return render(request, "auctions/auction.html", {
-                        "bid_form": bid_form,
-                        "auction": current_auction,
-                        "message": "Bid must be higher than current bid"
-                    })
-                else: 
-                    new_bid = Bid(
-                        bidder = request.user,
-                        auction = current_auction,
-                        bid = bid,
-                    )
-                    new_bid.save()
+                    if bid <= current_auction.bid:
+                        return render(request, "auctions/auction.html", {
+                            "bid_form": bid_form,
+                            "auction": current_auction,
+                            "images": images,
+                            "message": "Bid must be higher than current bid"
+                        })
+                    else: 
+                        new_bid = Bid(
+                            bidder = request.user,
+                            auction = current_auction,
+                            bid = bid,
+                        )
+                        new_bid.save()
 
-                    current_auction.bid = bid
-                    current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
-                    print(f"current_auction.bid_counter: {current_auction.bid_counter}")
-                    current_auction.save()
+                        current_auction.bid = bid
+                        current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
+                        current_auction.save()
 
-                    return render(request, "auctions/auction.html", {
-                        "bid_form": bid_form,
-                        "auction": current_auction,
-                        "images": images,
-                        "message": "Bid placed !"
-                    })
-    
-
+                        return render(request, "auctions/auction.html", {
+                            "bid_form": bid_form,
+                            "auction": current_auction,
+                            "images": images,
+                            "message": "Bid placed !"
+                        })
+                
     return render(request, "auctions/auction.html", {
         "bid_form": bid_form,
         "auction": current_auction,
         "images": images
     })
 
-
+        
 def wishlist(request):
     return render(request, "auctions/wishlist.html")
 
