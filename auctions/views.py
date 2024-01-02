@@ -177,7 +177,7 @@ def auction(request, auction_id):
                     auction = current_auction
                 )
                 new_wishlist.save()
-                
+
                 return render(request, "auctions/auction.html", {
                     "bid_form": bid_form,
                     "auction": current_auction,
@@ -224,5 +224,9 @@ def auction(request, auction_id):
 
         
 def wishlist(request):
-    return render(request, "auctions/wishlist.html")
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    print(wishlist_items)
+    return render(request, "auctions/wishlist.html", {
+        "wishlist": wishlist_items
+    })
 
