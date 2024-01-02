@@ -3,5 +3,8 @@
 {% block body %}
 <div class="wishlist-container">
     <h1>WISHLIST</h1>
+    {% for item in wishlist %}
+    <p>{{ item.auction }}</p>
+    {% endfor %}
 </div>
 {% endblock %}
