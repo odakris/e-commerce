@@ -6,7 +6,7 @@ from django.urls import reverse
 
 # from django.db.models import OuterRef, Subquery
 
-from .models import User, Category, Auction, ImagesUpload, Bid
+from .models import User, Category, Auction, ImagesUpload, Bid, Wishlist
 from .forms import SellForm, BidForm
 
 from commerce.settings import MEDIA_URL
@@ -171,6 +171,13 @@ def auction(request, auction_id):
             return render(request, "auctions/login.html")
         else:   
             if "wishlist" in request.POST:
+
+                new_wishlist = Wishlist(
+                    user = request.user,
+                    auction = current_auction
+                )
+                new_wishlist.save()
+                
                 return render(request, "auctions/auction.html", {
                     "bid_form": bid_form,
                     "auction": current_auction,
