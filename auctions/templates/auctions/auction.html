@@ -13,28 +13,45 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="auction-bid flex">
-            <h1>{{ auction.title }}</h1>
-            <div class="auction-bid-details flex">
-                <div class="auction-current-bid">{{ auction.bid }} $</div>
-                <div class="auction-bid-counter">
-                    {% if auction.bid_counter == 0 %}
-                    <p>No bids yet</p>
-                    {% elif auction.bid_counter == 1 %}
-                    <p>{{ auction.bid_counter }} bid</p>
-                    {% else %}
-                    <p>{{ auction.bid_counter }} bids</p>
-                    {% endif %}
+        <div class="auction-bid-container">
+            <div class="auction-bid flex">
+                <h1>{{ auction.title }}</h1>
+                <div class="auction-bid-details flex">
+                    <div class="auction-current-bid">{{ auction.bid }} $</div>
+                    <div class="auction-bid-counter">
+                        {% if auction.bid_counter == 0 %}
+                        <p>No bids yet</p>
+                        {% elif auction.bid_counter == 1 %}
+                        <p>{{ auction.bid_counter }} bid</p>
+                        {% else %}
+                        <p>{{ auction.bid_counter }} bids</p>
+                        {% endif %}
+                    </div>
                 </div>
+                <div class="auction-forms">
+                    <div class="bid_form">
+                        <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
+                            class="auction-bid-form flex">
+                            {% csrf_token %}
+                            {{ bid_form }}
+                            <input type="submit" value="Place Bid" class="btn">
+                        </form>
+                    </div>
+                    <div class="wishlist-form">
+                        <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
+                            class="auction-wishlist-form flex">
+                            {% csrf_token %}
+                            <input type="submit" name="wishlist" value="Add To Wishlist" class="btn">
+                        </form>
+                    </div>
+                </div>
+
             </div>
-            <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-bid-form flex">
-                {% csrf_token %}
-                {{ bid_form }}
-                <input type="submit" value="Place Bid" class="btn">
-            </form>
-            {% if message %}
-            <div class="error-msg">{{ message }}</div>
-            {% endif %}
+            <div class="auction-msg">
+                {% if message %}
+                <div class="error-msg">{{ message }}</div>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="auction-details flex">
