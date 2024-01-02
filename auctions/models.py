@@ -46,3 +46,8 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"{self.bid} on {self.auction}"
+    
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wishlist_user")
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="wishlist_auction")
