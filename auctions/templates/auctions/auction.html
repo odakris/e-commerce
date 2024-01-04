@@ -37,13 +37,23 @@
                             <input type="submit" value="Place Bid" class="btn">
                         </form>
                     </div>
+                    {% if closeButton %}
                     <div class="wishlist-form">
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
-                            <input type="submit" name="wishlist" value="Add To Wishlist" class="btn">
+                            <input type="submit" name="wishlist" value="Close Auction" class="btn">
                         </form>
                     </div>
+                    {% else %}
+                    <div class="wishlist-form">
+                        <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
+                            class="auction-wishlist-form flex">
+                            {% csrf_token %}
+                            <input type="submit" name="wishlist" value="{{ wishlist }}" class="btn">
+                        </form>
+                    </div>
+                    {% endif %}
                 </div>
 
             </div>
