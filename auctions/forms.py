@@ -11,3 +11,7 @@ class SellForm(forms.Form):
 
 class BidForm(forms.Form):
     bid = forms.DecimalField(label=False, widget=forms.NumberInput(attrs={"min": 1, "class": "form-control", "placeholder": "$", "autocomplete": "off"}))
+
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(label=False, widget=forms.Textarea(attrs={"placeholder": "Comment here"}))
