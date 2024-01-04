@@ -28,6 +28,9 @@ class Auction(models.Model):
     active = models.BooleanField(default=True)
     close_date = models.DateTimeField(auto_now_add=True, null=True)
 
+    class Meta:
+        ordering = ["creation_date"]
+
     def __str__(self):
         return f"{self.title} by {self.seller}"
     
@@ -46,6 +49,9 @@ class Bid(models.Model):
     bid_date = models.DateTimeField(auto_now_add=True, null=True)
     bid = models.IntegerField()
 
+    class Meta:
+        ordering = ["bid_date"]
+
     def __str__(self):
         return f"{self.bid} on {self.auction}"
     
@@ -53,4 +59,7 @@ class Bid(models.Model):
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wishlist_user")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="wishlist_auction")
-    wishlist_date=models.DateTimeField(auto_now_add=True, null=True)
+    wishlist_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ["wishlist_date"]
