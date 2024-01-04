@@ -34,23 +34,25 @@
                             class="auction-bid-form flex">
                             {% csrf_token %}
                             {{ bid_form }}
-                            <input type="submit" value="Place Bid" class="btn">
+                            <input type="submit" value="Place Bid" class="btn" {{ context.disable }}>
                         </form>
                     </div>
-                    {% if closeButton %}
+                    {% if context.closeButton %}
                     <div class="wishlist-form">
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
-                            <input type="submit" name="wishlist" value="Close Auction" class="btn">
+                            <input type="submit" name="close" value="{{ context.closeMessage }}" class="btn" {{
+                                context.disable }}>
                         </form>
                     </div>
                     {% else %}
-                    <div class="wishlist-form">
+                    <div class=" wishlist-form">
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
-                            <input type="submit" name="wishlist" value="{{ wishlist }}" class="btn">
+                            <input type="submit" name="wishlist" value="{{ context.wishlist }}" class="btn" {{
+                                context.disable }}>
                         </form>
                     </div>
                     {% endif %}
@@ -58,8 +60,8 @@
 
             </div>
             <div class="auction-msg">
-                {% if message %}
-                <div class="error-msg">{{ message }}</div>
+                {% if context.message %}
+                <div class="error-msg">{{ context.message }}</div>
                 {% endif %}
             </div>
         </div>
