@@ -1,0 +1,64 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>ACTIVE AUCTIONS</h1>
+<div class="items-container">
+    {% for auction in active %}
+    <a href="{% url 'auctions:auction' auction.pk %}">
+        <div id="{{ auction.pk }}" class="item flex">
+            <div class="item-img">
+                {% for image in images %}
+                {% if image.auction.pk == auction.pk %}
+                <img src="{{ image.upload.url }}">
+                {% endif %}
+                {% endfor %}
+                <!-- <img src="/media/{{ auction.first_image }}"> -->
+            </div>
+            <div class="item-details">
+                <h3 class="item-title">{{ auction.title }}</h3>
+                <div class="item-price flex">
+                    <p>{{ auction.bid }} $</p>
+                    {% if auction.bid_counter == 0 %}
+                    <p>No bids yet</p>
+                    {% elif auction.bid_counter == 1 %}
+                    <p>{{ auction.bid_counter }} bid</p>
+                    {% else %}
+                    <p>{{ auction.bid_counter }} bids</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<h1>CLOSED AUCTIONS</h1>
+<div class="items-container">
+    {% for auction in closed %}
+    <a href="{% url 'auctions:auction' auction.pk %}">
+        <div id="{{ auction.pk }}" class="item flex">
+            <div class="item-img">
+                {% for image in images %}
+                {% if image.auction.pk == auction.pk %}
+                <img src="{{ image.upload.url }}">
+                {% endif %}
+                {% endfor %}
+                <!-- <img src="/media/{{ auction.first_image }}"> -->
+            </div>
+            <div class="item-details">
+                <h3 class="item-title">{{ auction.title }}</h3>
+                <div class="item-price flex">
+                    <p>{{ auction.bid }} $</p>
+                    {% if auction.bid_counter == 0 %}
+                    <p>No bids yet</p>
+                    {% elif auction.bid_counter == 1 %}
+                    <p>{{ auction.bid_counter }} bid</p>
+                    {% else %}
+                    <p>{{ auction.bid_counter }} bids</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
