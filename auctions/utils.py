@@ -13,7 +13,7 @@ def all_categories():
     return choices
 
 
-def getFisrtImage(allImages):
+def getFirstImage(allImages):
     images = []
     auction_pk = []
 
