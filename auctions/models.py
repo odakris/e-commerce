@@ -26,6 +26,7 @@ class Auction(models.Model):
     bid = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     bid_counter = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
+    close_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"{self.title} by {self.seller}"
@@ -52,3 +53,4 @@ class Bid(models.Model):
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wishlist_user")
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="wishlist_auction")
+    wishlist_date=models.DateTimeField(auto_now_add=True, null=True)
