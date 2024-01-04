@@ -66,3 +66,16 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f"{self.user} wishlisted {self.auction}"
+    
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment_user")
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name="comment_auction")
+    comment = models.TextField(max_length=1200)
+    comment_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ["comment_date"]
+
+    def __str__(self):
+        return f"{self.user} comment on {self.auction}"
