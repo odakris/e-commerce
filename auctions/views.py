@@ -7,7 +7,7 @@ from django.urls import reverse
 # from django.db.models import OuterRef, Subquery
 
 from .models import User, Category, Auction, ImagesUpload, Bid, Wishlist
-from .forms import SellForm, BidForm
+from .forms import SellForm, BidForm, CommentForm
 from .utils import getFirstImage, isUserAuction
 
 
@@ -159,6 +159,7 @@ def auction(request, auction_id):
     bid_form = BidForm()
     current_auction = Auction.objects.get(pk=auction_id)
     images = ImagesUpload.objects.filter(auction=current_auction)
+    comment_form = CommentForm()
     isWishlisted = ""
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
@@ -265,6 +266,7 @@ def auction(request, auction_id):
         return render(request, "auctions/auction.html", {
             "bid_form": bid_form,
             "auction": current_auction,
+            "comment_form": comment_form,
             "images": images,
             "active": current_auction.active,
             "context": context
@@ -274,6 +276,7 @@ def auction(request, auction_id):
     return render(request, "auctions/auction.html", {
         "bid_form": bid_form,
         "auction": current_auction,
+        "comment_form": comment_form,
         "images": images,
         "active": current_auction.active,
         "context": default_context
