@@ -40,7 +40,7 @@ class ImagesUpload(models.Model):
     upload = models.FileField(upload_to=utils.user_directory_path, null=True)
 
     def __str__(self):
-        return f"{self.upload}"
+        return f"{self.upload} for {self.auction} by {self.seller}"
     
 
 class Bid(models.Model):
@@ -53,7 +53,7 @@ class Bid(models.Model):
         ordering = ["bid_date"]
 
     def __str__(self):
-        return f"{self.bid} on {self.auction}"
+        return f"{self.bid} on {self.auction} by {self.bidder}"
     
 
 class Wishlist(models.Model):
@@ -63,3 +63,6 @@ class Wishlist(models.Model):
 
     class Meta:
         ordering = ["wishlist_date"]
+
+    def __str__(self):
+        return f"{self.user} wishlisted {self.auction}"
