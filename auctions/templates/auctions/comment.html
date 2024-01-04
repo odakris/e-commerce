@@ -1,1 +1,8 @@
 <h1>COMMENTS</h1>
+<div class="comment-form">
+    <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-wishlist-form flex">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit" name="comment" value="Comment" class="btn">
+    </form>
+</div>
