@@ -34,7 +34,11 @@
                             class="auction-bid-form flex">
                             {% csrf_token %}
                             {{ bid_form }}
-                            <input type="submit" value="Place Bid" class="btn" {{ context.disable }}>
+                            {% if active %}
+                            <input type="submit" value="Place Bid" class="btn">
+                            {% else %}
+                            <input type="submit" value="Place Bid" class="btn" disabled>
+                            {% endif %}
                         </form>
                     </div>
                     {% if context.closeButton %}
@@ -42,8 +46,11 @@
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
-                            <input type="submit" name="close" value="{{ context.closeMessage }}" class="btn" {{
-                                context.disable }}>
+                            {% if active %}
+                            <input type="submit" name="close" value="Close Auction" class="btn">
+                            {% else %}
+                            <input type="submit" name="close" value="Closed" class="btn" disabled>
+                            {% endif %}
                         </form>
                     </div>
                     {% else %}
@@ -51,8 +58,11 @@
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
-                            <input type="submit" name="wishlist" value="{{ context.wishlist }}" class="btn" {{
-                                context.disable }}>
+                            {% if active %}
+                            <input type="submit" name="wishlist" value="{{ context.wishlist }}" class="btn">
+                            {% else %}
+                            <input type="submit" name="wishlist" value="{{ context.wishlist }}" class="btn" disabled>
+                            {% endif %}
                         </form>
                     </div>
                     {% endif %}
