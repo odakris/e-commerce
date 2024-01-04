@@ -158,6 +158,7 @@ def auction(request, auction_id):
     images = ImagesUpload.objects.filter(auction=current_auction)
     isWishlisted = ""
     closeButton = isUserAuction(request.user, current_auction.pk)
+
     default_context = {
         "wishlist": "Add To Wishlist",
     }
@@ -241,14 +242,13 @@ def auction(request, auction_id):
                 context = {
                     "message": "Bid Closed !",
                     "closeButton": closeButton,
-                    "closeMessage": "Closed",
-                    "disable": "disabled"
                 }
             
         return render(request, "auctions/auction.html", {
             "bid_form": bid_form,
             "auction": current_auction,
             "images": images,
+            "active": current_auction.active,
             "context": context
         })
         
@@ -257,6 +257,7 @@ def auction(request, auction_id):
         "bid_form": bid_form,
         "auction": current_auction,
         "images": images,
+        "active": current_auction.active,
         "context": default_context
     })
 
@@ -269,3 +270,16 @@ def wishlist(request):
         "images": images
     })
 
+
+def myAuctions(request):
+    myActiveAuctions = Auction.objects.filter(seller=request.user).filter(active=True)
+    myClosedAuctions = Auction.objects.filter(seller=request.user).filter(active=False)
+    images = getFirstImage(ImagesUpload.objects.all())
+
+    print(f"myActiveAuctions: {myActiveAuctions}")
+
+    return render(request, 'auctions/my_auctions.html', {
+        "active": myActiveAuctions,
+        "closed": myClosedAuctions,
+        "images": images
+    })
