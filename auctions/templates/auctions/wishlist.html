@@ -1,10 +1,34 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="wishlist-container">
-    <h1>WISHLIST</h1>
+<h1>WISHLIST</h1>
+<div class="items-container">
     {% for item in wishlist %}
-    <p>{{ item.auction }}</p>
+    <a href="{% url 'auctions:auction' item.auction.pk %}">
+        <div id="{{ item.auction.pk }}" class="item flex">
+            <div class="item-img">
+                {% for image in images %}
+                {% if image.auction.pk == item.auction.pk %}
+                <img src="{{ image.upload.url }}">
+                {% endif %}
+                {% endfor %}
+                <!-- <img src="/media/{{ auction.first_image }}"> -->
+            </div>
+            <div class="item-details">
+                <h3 class="item-title">{{ item.auction.title }}</h3>
+                <div class="item-price flex">
+                    <p>{{ item.auction.bid }} $</p>
+                    {% if item.auction.bid_counter == 0 %}
+                    <p>No bids yet</p>
+                    {% elif item.auction.bid_counter == 1 %}
+                    <p>{{ item.auction.bid_counter }} bid</p>
+                    {% else %}
+                    <p>{{ item.auction.bid_counter }} bids</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </a>
     {% endfor %}
 </div>
 {% endblock %}
