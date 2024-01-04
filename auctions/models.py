@@ -25,6 +25,7 @@ class Auction(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True, null=True)
     bid = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     bid_counter = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.title} by {self.seller}"
