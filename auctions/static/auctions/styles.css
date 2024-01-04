@@ -258,7 +258,7 @@ input[type="submit"] {
 
 /* CATEGORIES */
 .categories {
-    flex-direction: column;
+    /* flex-direction: column; */
     /* min-height: calc(100vh - var(--footer-height)); */
     height: 100%;
     width: 100%;
