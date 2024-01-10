@@ -1,8 +1,23 @@
 <h1>COMMENTS</h1>
+<div class="comment-display">
+    {% for comment in comments %}
+    <div class="comment">
+        <p>{{ comment.comment }}</p>
+        <div class="comment-details">
+            <p>{{ comment.user }}</p>
+            <p>{{ comment.comment_date }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 <div class="comment-form">
     <form action="{% url 'auctions:auction' auction.pk %}" method="POST" class="auction-wishlist-form flex">
         {% csrf_token %}
         {{ comment_form }}
-        <input type="submit" name="comment" value="Comment" class="btn">
+        {% if active %}
+        <input type="submit" value="Comment" class="btn">
+        {% else %}
+        <input type="submit" value="Comment" class="btn" disabled>
+        {% endif %}
     </form>
 </div>
