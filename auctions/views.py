@@ -6,7 +6,7 @@ from django.urls import reverse
 
 # from django.db.models import OuterRef, Subquery
 
-from .models import User, Category, Auction, ImagesUpload, Bid, Wishlist
+from .models import User, Category, Auction, ImagesUpload, Bid, Wishlist, Comment
 from .forms import SellForm, BidForm, CommentForm
 from .utils import getFirstImage, isUserAuction
 
@@ -120,12 +120,12 @@ def sell(request):
     # POST REQUESTS 
     if request.method == "POST":
         # get informations form form
-        sell_form = SellForm(request.POST)
-        if sell_form.is_valid():
-            title = sell_form.cleaned_data["title"]
-            category = sell_form.cleaned_data["category"]
-            description = sell_form.cleaned_data["description"]
-            starting_bid = sell_form.cleaned_data["starting_bid"]
+        sell_form_data = SellForm(request.POST)
+        if sell_form_data.is_valid():
+            title = sell_form_data.cleaned_data["title"]
+            category = sell_form_data.cleaned_data["category"]
+            description = sell_form_data.cleaned_data["description"]
+            starting_bid = sell_form_data.cleaned_data["starting_bid"]
 
             # Create auction into model
             new_auction = Auction(
@@ -160,7 +160,8 @@ def auction(request, auction_id):
     current_auction = Auction.objects.get(pk=auction_id)
     images = ImagesUpload.objects.filter(auction=current_auction)
     comment_form = CommentForm()
-    isWishlisted = ""
+    comments = Comment.objects.filter(auction=current_auction)
+    # isWishlisted = ""
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
 
@@ -186,6 +187,7 @@ def auction(request, auction_id):
 
     # POST REQUESTS
     if request.method == "POST":
+        print(f"request.method: {request.POST}")
         # For any POST request user is ask to login of register
         if not request.user.is_authenticated: 
             return render(request, "auctions/login.html")
@@ -213,9 +215,9 @@ def auction(request, auction_id):
             #  Bid
             elif "bid" in request.POST:
                 # Get bid informations from form
-                bid_form = BidForm(request.POST)
-                if bid_form.is_valid():
-                    bid = bid_form.cleaned_data["bid"]
+                bid_form_data = BidForm(request.POST)
+                if bid_form_data.is_valid():
+                    bid = bid_form_data.cleaned_data["bid"]
                     # Handle first bid 
                     if current_auction.bid_counter == 0 and bid < current_auction.bid:
                         context = {
@@ -241,17 +243,23 @@ def auction(request, auction_id):
                         current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
                         current_auction.save()
 
-                        # For any bid placed, add item to wishlist 
-                        new_wishlist = Wishlist(
-                            user = request.user,
-                            auction = current_auction
-                        )
-                        new_wishlist.save()
+                        # For any bid placed, add item to wishlist if not already
+                        if not isWishlisted: 
+                            new_wishlist = Wishlist(
+                                user = request.user,
+                                auction = current_auction
+                            )
+                            new_wishlist.save()
 
-                        context = {
-                            "message": "Bid placed !",
-                            "wishlist": default_context["wishlist"]
-                        }
+                            context = {
+                                "message": "Bid placed !",
+                                "wishlist": "Remove From Wishlist"
+                            }
+                        else: 
+                            context = {
+                                "message": "Bid placed !",
+                                "wishlist": default_context["wishlist"]
+                            }
             # Close auction
             elif "close" in request.POST:
                 # Set auction to non-active
@@ -262,11 +270,27 @@ def auction(request, auction_id):
                     "message": "Bid Closed !",
                     "closeButton": closeButton,
                 }
-            
+            # Comment
+            elif "comment" in request.POST:
+                comment_form_data = CommentForm(request.POST)
+                if comment_form_data.is_valid():
+                    comment = comment_form_data.cleaned_data["comment"]    
+                    
+                    #Create new comment
+                    new_comment = Comment(
+                        user = request.user,
+                        auction = current_auction,
+                        comment = comment
+                    )
+                    new_comment.save()
+
+                    context = default_context
+                
         return render(request, "auctions/auction.html", {
             "bid_form": bid_form,
             "auction": current_auction,
             "comment_form": comment_form,
+            "comments": comments,
             "images": images,
             "active": current_auction.active,
             "context": context
@@ -277,6 +301,7 @@ def auction(request, auction_id):
         "bid_form": bid_form,
         "auction": current_auction,
         "comment_form": comment_form,
+        "comments": comments,
         "images": images,
         "active": current_auction.active,
         "context": default_context
