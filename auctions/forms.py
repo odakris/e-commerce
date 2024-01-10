@@ -14,4 +14,4 @@ class BidForm(forms.Form):
 
 
 class CommentForm(forms.Form):
-    comment = forms.CharField(label=False, widget=forms.Textarea(attrs={"placeholder": "Comment here"}))
+    comment = forms.CharField(label=False, widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Comment here", "autocomplete": "off"}))
