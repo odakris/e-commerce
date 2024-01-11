@@ -1,16 +1,36 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<h1>ACTIVE AUCTIONS</h1>
-<div class="items-container">
-    {% for auction in active %}
-    {% include "./item.html" %}
-    {% endfor %}
-</div>
-<h1>CLOSED AUCTIONS</h1>
-<div class="items-container">
-    {% for auction in closed %}
-    {% include "./item.html" %}
-    {% endfor %}
+<div class="my-auctions-container">
+    <h1>MY AUCTIONS</h1>
+    <div class="my-auctions">
+        <h3>ACTIVE AUCTIONS</h3>
+        {% if active %}
+        <div class="items-container">
+            {% for auction in active %}
+            {% include "./item.html" %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-items">
+            <h4>You do not have any live auctions</h4>
+            <p>Want to sell something ? Please click <a href="{% url 'auctions:sell' %}">HERE</a></p>
+        </div>
+        {% endif %}
+    </div>
+    <div class="my-auctions">
+        <h3>CLOSED AUCTIONS</h3>
+        {% if closed %}
+        <div class="items-container">
+            {% for auction in closed %}
+            {% include "./item.html" %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-items">
+            <h4>You do not have any live auctions</h4>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

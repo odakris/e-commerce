@@ -324,9 +324,11 @@ input[type="submit"] {
     height: 100%;
 }
 
-.no-items p {
+.no-items p,
+.no-items h4 {
     display: block;
-    margin: 2rem 0;
+    margin: 1rem;
+    padding: 1rem 5rem;
 }
 
 /* AUCTION */
@@ -409,6 +411,24 @@ input[type="submit"] {
 .auction-label,
 .auction-content {
     display: inline-block;
+}
+
+/* WISHLIST and MY AUCTIONS*/
+.wishlist-container,
+.my-auctions-container {
+    display: block;
+}
+
+.wishlist,
+.my-auctions {
+    display: block;
+    padding: 1rem;
+    margin: 2rem;
+}
+
+.wishlist h3,
+.my-auctions h3 {
+    margin: 2rem 0;
 }
 
 /* FOOTER */
