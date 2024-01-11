@@ -2,30 +2,28 @@
 
 {% block body %}
 <h1>WISHLIST</h1>
+<h2>On Going Auctions</h2>
 <div class="items-container">
-    {% for item in wishlist %}
-    {% if item.auction.active %}
-    <div class="items-on-going">
-        <h2>On Going Auctions</h2>
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-    </div>
-    {% elif not item.auction.active and user == item.auction.winner %}
-    <div class="items-won">
-        <h2>Auctions Won</h2>
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-    </div>
-    {% elif not item.auction.active %}
-    <div class="items-lost">
-        <h2>Auctions Lost</h2>
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-    </div>
-    {% endif %}
+    {% for item in ongoing %}
+    {% with item.auction as auction %}
+    {% include "./item.html" %}
+    {% endwith %}
+    {% endfor %}
+</div>
+<h2>Won Auctions</h2>
+<div class="items-container">
+    {% for item in won %}
+    {% with item.auction as auction %}
+    {% include "./item.html" %}
+    {% endwith %}
+    {% endfor %}
+</div>
+<h2>Lost Auctions</h2>
+<div class="items-container">
+    {% for item in lost %}
+    {% with item.auction as auction %}
+    {% include "./item.html" %}
+    {% endwith %}
     {% endfor %}
 </div>
 {% endblock %}
