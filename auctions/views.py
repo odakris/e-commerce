@@ -156,6 +156,9 @@ def sell(request):
 
 
 def auction(request, auction_id):
+
+
+
     bid_form = BidForm()
     current_auction = Auction.objects.get(pk=auction_id)
     images = ImagesUpload.objects.filter(auction=current_auction)
@@ -164,6 +167,9 @@ def auction(request, auction_id):
     # isWishlisted = ""
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
+
+    # print(User.objects.get(pk=Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder']))
+    # print(request.user)
 
     default_context = {
         "wishlist": "Add To Wishlist",
@@ -263,7 +269,12 @@ def auction(request, auction_id):
             # Close auction
             elif "close" in request.POST:
                 # Set auction to non-active
+
+                print(Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder'])
+                print(request.user)
+
                 current_auction.active = False
+                current_auction.winner = User.objects.get(pk=Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder'])
                 current_auction.save()
 
                 context = {
