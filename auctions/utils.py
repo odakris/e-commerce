@@ -1,10 +1,13 @@
 from . import models
 
+
+# Store imported images
 def user_directory_path(instance, filename):
     # fill will be uploaded to MEDIA_ROOT/user_<id>/item_<id>/<filename>
     return 'user_{0}/item_{1}/{2}'.format(instance.seller.pk, instance.auction.pk, filename)
 
 
+# Get all categories
 def all_categories():
     choices = []
     for category in models.Category.objects.all():
@@ -13,6 +16,7 @@ def all_categories():
     return choices
 
 
+# Get first image for each provided auctions to render
 def getFirstImage(allImages):
     images = []
     auction_pk = []
@@ -25,12 +29,14 @@ def getFirstImage(allImages):
     return images
 
 
+# Check if is user's auction
 def isUserAuction(user, auction_id):
     auction = models.Auction.objects.get(pk=auction_id)
     if user == auction.seller:
         return True
     return False
 
+# Handle wishlisted items
 def handle_wishlisting(request, current_auction, is_wishlisted):
     # Add to wishlist
     if request.POST["wishlist"] == "Add To Wishlist":
@@ -56,6 +62,8 @@ def handle_wishlisting(request, current_auction, is_wishlisted):
     return context
 
 
+
+# Handle bids on auctions
 def handle_bidding(request, current_auction, is_wishlisted, bid_form_data, default_context):
     if bid_form_data.is_valid():
         bid = bid_form_data.cleaned_data["bid"]
@@ -105,6 +113,7 @@ def handle_bidding(request, current_auction, is_wishlisted, bid_form_data, defau
     return context
 
 
+# Handle closing auction
 def handle_auction_closing(request, current_auction, closeButton):
     # Set auction to non-active
     current_auction.active = False
@@ -120,6 +129,7 @@ def handle_auction_closing(request, current_auction, closeButton):
     return context
 
 
+# Handle comments
 def handle_commenting(request, current_auction, comment_form_data):
     if comment_form_data.is_valid():
         comment = comment_form_data.cleaned_data["comment"]    

@@ -192,10 +192,10 @@ def auction(request, auction_id):
         if not request.user.is_authenticated: 
             return render(request, "auctions/login.html")
         else:   
-            # Wishlist
+            # Wishlist auction
             if "wishlist" in request.POST:
                 context = handle_wishlisting(request, current_auction, is_wishlisted)
-            #  Bid
+            #  Bid auction
             elif "bid" in request.POST:
                 # Get bid informations from form
                 bid_form_data = BidForm(request.POST)
@@ -203,7 +203,7 @@ def auction(request, auction_id):
             # Close auction
             elif "close" in request.POST:
                 context = handle_auction_closing(request, current_auction, closeButton)
-            # Comment
+            # Comment auction
             elif "comment" in request.POST:
                 comment_form_data = CommentForm(request.POST)
                 handle_commenting(request, current_auction, comment_form_data)
