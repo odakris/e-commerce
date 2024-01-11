@@ -7,17 +7,23 @@
     {% if item.auction.active %}
     <div class="items-on-going">
         <h2>On Going Auctions</h2>
-        {% include "./wishlist_item.html" %}
+        {% with item.auction as auction %}
+        {% include "./item.html" %}
+        {% endwith %}
     </div>
     {% elif not item.auction.active and user == item.auction.winner %}
     <div class="items-won">
         <h2>Auctions Won</h2>
-        {% include "./wishlist_item.html" %}
+        {% with item.auction as auction %}
+        {% include "./item.html" %}
+        {% endwith %}
     </div>
     {% elif not item.auction.active %}
     <div class="items-lost">
         <h2>Auctions Lost</h2>
-        {% include "./wishlist_item.html" %}
+        {% with item.auction as auction %}
+        {% include "./item.html" %}
+        {% endwith %}
     </div>
     {% endif %}
     {% endfor %}
