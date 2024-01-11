@@ -266,21 +266,19 @@ def auction(request, auction_id):
                                 "message": "Bid placed !",
                                 "wishlist": default_context["wishlist"]
                             }
+
             # Close auction
             elif "close" in request.POST:
                 # Set auction to non-active
-
-                print(Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder'])
-                print(request.user)
-
                 current_auction.active = False
-                current_auction.winner = User.objects.get(pk=Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder'])
+                current_auction.winner = User.objects.get(pk=Bid.objects.filter(auction=current_auction).order_by("-bid").values('bidder')[0]['bidder'])
                 current_auction.save()
 
                 context = {
                     "message": "Bid Closed !",
                     "closeButton": closeButton,
                 }
+
             # Comment
             elif "comment" in request.POST:
                 comment_form_data = CommentForm(request.POST)
@@ -324,6 +322,7 @@ def wishlist(request):
     wishlist_items = Wishlist.objects.filter(user=request.user)
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
+
     return render(request, "auctions/wishlist.html", {
         "wishlist": wishlist_items,
         "images": images
@@ -332,14 +331,14 @@ def wishlist(request):
 
 def myAuctions(request):
     # Get all active auctions posted by current user
-    myActiveAuctions = Auction.objects.filter(seller=request.user).filter(active=True)
+    my_active_auctions = Auction.objects.filter(seller=request.user).filter(active=True)
     # Get all non-active auctions posted by current user
-    myClosedAuctions = Auction.objects.filter(seller=request.user).filter(active=False)
-        # Get auctions images
+    my_closed_auctions = Auction.objects.filter(seller=request.user).filter(active=False)
+    # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
 
     return render(request, 'auctions/my_auctions.html', {
-        "active": myActiveAuctions,
-        "closed": myClosedAuctions,
+        "active": my_active_auctions,
+        "closed": my_closed_auctions,
         "images": images
     })
