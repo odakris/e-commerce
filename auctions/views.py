@@ -93,7 +93,7 @@ def filter(request, filter):
         "all": "All",
         "category": filter,
         "categories": Category.objects.all(),
-        "auctions": Auction.objects.filter(active=True).filter(category=Category.objects.get(name=filter)),
+        "auctions": Auction.objects.filter(active=True, category=Category.objects.get(name=filter)),
         "images": images
     })
     
@@ -172,7 +172,7 @@ def auction(request, auction_id):
     
     # Check user wishlist
     if request.user.is_authenticated: 
-        is_wishlisted = Wishlist.objects.filter(user=request.user).filter(auction=current_auction)
+        is_wishlisted = Wishlist.objects.filter(user=request.user, auction=current_auction)
         if is_wishlisted:
             default_context = {
                 "wishlist": "Remove From Wishlist"
@@ -333,9 +333,9 @@ def wishlist(request):
 
 def myAuctions(request):
     # Get all active auctions posted by current user
-    my_active_auctions = Auction.objects.filter(seller=request.user).filter(active=True)
+    my_active_auctions = Auction.objects.filter(seller=request.user, active=True)
     # Get all non-active auctions posted by current user
-    my_closed_auctions = Auction.objects.filter(seller=request.user).filter(active=False)
+    my_closed_auctions = Auction.objects.filter(seller=request.user, active=False)
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
 
