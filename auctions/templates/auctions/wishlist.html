@@ -4,31 +4,96 @@
 <h1>WISHLIST</h1>
 <div class="items-container">
     {% for item in wishlist %}
-    <a href="{% url 'auctions:auction' item.auction.pk %}">
-        <div id="{{ item.auction.pk }}" class="item flex">
-            <div class="item-img">
-                {% for image in images %}
-                {% if image.auction.pk == item.auction.pk %}
-                <img src="{{ image.upload.url }}">
-                {% endif %}
-                {% endfor %}
-                <!-- <img src="/media/{{ auction.first_image }}"> -->
-            </div>
-            <div class="item-details">
-                <h3 class="item-title">{{ item.auction.title }}</h3>
-                <div class="item-price flex">
-                    <p>{{ item.auction.bid }} $</p>
-                    {% if item.auction.bid_counter == 0 %}
-                    <p>No bids yet</p>
-                    {% elif item.auction.bid_counter == 1 %}
-                    <p>{{ item.auction.bid_counter }} bid</p>
-                    {% else %}
-                    <p>{{ item.auction.bid_counter }} bids</p>
+    {% if item.auction.active %}
+    <div class="items-on-going">
+        <h2>On Going</h2>
+        <a href="{% url 'auctions:auction' item.auction.pk %}">
+            <div id="{{ item.auction.pk }}" class="item flex">
+                <div class="item-img">
+                    {% for image in images %}
+                    {% if image.auction.pk == item.auction.pk %}
+                    <img src="{{ image.upload.url }}">
                     {% endif %}
+                    {% endfor %}
+                    <!-- <img src="/media/{{ auction.first_image }}"> -->
+                </div>
+                <div class="item-details">
+                    <h3 class="item-title">{{ item.auction.title }}</h3>
+                    <div class="item-price flex">
+                        <p>{{ item.auction.bid }} $</p>
+                        {% if item.auction.bid_counter == 0 %}
+                        <p>No bids yet</p>
+                        {% elif item.auction.bid_counter == 1 %}
+                        <p>{{ item.auction.bid_counter }} bid</p>
+                        {% else %}
+                        <p>{{ item.auction.bid_counter }} bids</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </div>
+    {% elif not item.auction.active and user == item.auction.winner %}
+    <br>
+    <div class="items-won">
+        <h2>Won</h2>
+        <a href="{% url 'auctions:auction' item.auction.pk %}">
+            <div id="{{ item.auction.pk }}" class="item flex">
+                <div class="item-img">
+                    {% for image in images %}
+                    {% if image.auction.pk == item.auction.pk %}
+                    <img src="{{ image.upload.url }}">
+                    {% endif %}
+                    {% endfor %}
+                    <!-- <img src="/media/{{ auction.first_image }}"> -->
+                </div>
+                <div class="item-details">
+                    <h3 class="item-title">{{ item.auction.title }}</h3>
+                    <div class="item-price flex">
+                        <p>{{ item.auction.bid }} $</p>
+                        {% if item.auction.bid_counter == 0 %}
+                        <p>No bids yet</p>
+                        {% elif item.auction.bid_counter == 1 %}
+                        <p>{{ item.auction.bid_counter }} bid</p>
+                        {% else %}
+                        <p>{{ item.auction.bid_counter }} bids</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% elif not item.auction.active %}
+    <br>
+    <div class="items-lost">
+        <h2>Lost</h2>
+        <a href="{% url 'auctions:auction' item.auction.pk %}">
+            <div id="{{ item.auction.pk }}" class="item flex">
+                <div class="item-img">
+                    {% for image in images %}
+                    {% if image.auction.pk == item.auction.pk %}
+                    <img src="{{ image.upload.url }}">
+                    {% endif %}
+                    {% endfor %}
+                    <!-- <img src="/media/{{ auction.first_image }}"> -->
+                </div>
+                <div class="item-details">
+                    <h3 class="item-title">{{ item.auction.title }}</h3>
+                    <div class="item-price flex">
+                        <p>{{ item.auction.bid }} $</p>
+                        {% if item.auction.bid_counter == 0 %}
+                        <p>No bids yet</p>
+                        {% elif item.auction.bid_counter == 1 %}
+                        <p>{{ item.auction.bid_counter }} bid</p>
+                        {% else %}
+                        <p>{{ item.auction.bid_counter }} bids</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
