@@ -310,13 +310,30 @@ def auction(request, auction_id):
 
         
 def wishlist(request):
-    # Get all wishlisted auctions by current user
+    on_going_wishlist = []
+    won_wishlist = []
+    lost_wishlist = []
+
+    # Get all user's wishlisted auctions 
     wishlist_items = Wishlist.objects.filter(user=request.user)
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
 
+    for item in wishlist_items:
+        if item.auction.winner == request.user:
+            # Get all wishlisted auctions by current user
+            won_wishlist.append(item)
+        elif not item.auction.active and item.auction.winner != request.user:
+            # Get won auctions
+            lost_wishlist.append(item)
+        else:
+            # Get on going auctions
+            on_going_wishlist.append(item)
+
     return render(request, "auctions/wishlist.html", {
-        "wishlist": wishlist_items,
+        "ongoing": on_going_wishlist,
+        "won": won_wishlist,
+        "lost": lost_wishlist,
         "images": images
     })
 
