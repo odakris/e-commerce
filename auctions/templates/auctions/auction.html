@@ -72,11 +72,11 @@
             <div class="auction-msg">
                 {% if context.message %}
                 <div class="error-msg">{{ context.message }}</div>
+                {% elif not active and user == auction.winner %}
+                <div class="error-msg">Congratulation ! This auction is now yours.</div>
+                {% elif not active %}
+                <div class="error-msg">Unfortunatly, someone else won this auction.</div>
                 {% endif %}
-                {% if user == auction.winner %}
-                <div class="error-msg">You are the winner !</div>
-                {% endif %}
-
             </div>
         </div>
     </div>
