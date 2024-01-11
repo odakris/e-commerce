@@ -12,7 +12,6 @@ from .utils import getFirstImage, isUserAuction
 
 
 def index(request):
-    print(f"User: {request.user}")
     return render(request, "auctions/index.html")
 
 
@@ -156,14 +155,11 @@ def sell(request):
 
 
 def auction(request, auction_id):
-
-
-
     bid_form = BidForm()
-    current_auction = Auction.objects.get(pk=auction_id)
-    images = ImagesUpload.objects.filter(auction=current_auction)
     comment_form = CommentForm()
+    current_auction = Auction.objects.get(pk=auction_id)
     comments = Comment.objects.filter(auction=current_auction)
+    images = ImagesUpload.objects.filter(auction=current_auction)
 
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
@@ -316,12 +312,6 @@ def auction(request, auction_id):
 def wishlist(request):
     # Get all wishlisted auctions by current user
     wishlist_items = Wishlist.objects.filter(user=request.user)
-
-    wishlist_auction = wishlist_items.auction
-
-    print(f"wishlist_items: {wishlist_items}")
-    print(f"wishlist_auction: {wishlist_auction}")
-
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
 
@@ -338,8 +328,6 @@ def myAuctions(request):
     my_closed_auctions = Auction.objects.filter(seller=request.user).filter(active=False)
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
-
-    print(f"my_active_auctions: {my_active_auctions}")
 
     return render(request, 'auctions/my_auctions.html', {
         "active": my_active_auctions,
