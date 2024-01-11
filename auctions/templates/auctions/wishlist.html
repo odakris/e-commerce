@@ -1,56 +1,57 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="wishlist-container"></div>
-<h1>WISHLIST</h1>
-<div class="wishlist">
-    <h3>On Going Auctions</h3>
-    {% if ongoing%}
-    <div class="items-container">
-        {% for item in ongoing %}
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-        {% endfor %}
+<div class="wishlist-container">
+    <h1>WISHLIST</h1>
+    <div class="wishlist">
+        <h3>On Going Auctions</h3>
+        {% if ongoing %}
+        <div class="items-container">
+            {% for item in ongoing %}
+            {% with item.auction as auction %}
+            {% include "./item.html" %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-items">
+            <h4>You do not have any auctions in your wishlist</h4>
+            <p>Click <a href="{% url 'auctions:sell' %}">HERE</a> to start shopping.</p>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <div class="no-items">
-        <h4>You do not have any auctions in your wishlist</h4>
-        <p>Click <a href="{% url 'auctions:sell' %}">HERE</a> to start shopping.</p>
+    <div class="wishlist">
+        <h3>Won Auctions</h3>
+        {% if won %}
+        <div class="items-container">
+            {% for item in won %}
+            {% with item.auction as auction %}
+            {% include "./item.html" %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-items">
+            <h4>You do not have any won auctions</h4>
+            <p>It is not too late ! Click <a href="{% url 'auctions:sell' %}">HERE</a> to start shopping.</p>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
-<div class="wishlist">
-    <h3>Won Auctions</h3>
-    {% if won %}
-    <div class="items-container">
-        {% for item in won %}
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-        {% endfor %}
+    <div class="wishlist">
+        <h3>Lost Auctions</h3>
+        {% if lost %}
+        <div class="items-container">
+            {% for item in lost %}
+            {% with item.auction as auction %}
+            {% include "./item.html" %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-items">
+            <p>There is nothing to declare for now.</p>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <div class="no-items">
-        <h4>You do not have any won auctions</h4>
-        <p>It is not too late ! Click <a href="{% url 'auctions:sell' %}">HERE</a> to start shopping.</p>
-    </div>
-    {% endif %}
-</div>
-<div class="wishlist">
-    <h3>Lost Auctions</h3>
-    {% if lost %}
-    <div class="items-container">
-        {% for item in lost %}
-        {% with item.auction as auction %}
-        {% include "./item.html" %}
-        {% endwith %}
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="no-items">
-        <p>There is nothing to declare for now.</p>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 :root {
     --navbar-head-height: 8rem;
-    --auth-padding-left: 4rem;
+    --auth-padding-left: 3rem;
     --auth-icon-size: 3rem;
     --navbar-links-height: 5rem;
     --footer-height: 15rem;
@@ -290,6 +290,11 @@ input[type="submit"] {
     grid-gap: 2rem;
 }
 
+.items-container a {
+    text-decoration: none;
+    color: black;
+}
+
 .item {
     flex-direction: column;
     justify-content: space-between;
@@ -308,6 +313,10 @@ input[type="submit"] {
     object-fit: cover;
     max-width: 100%;
     border-radius: 1rem;
+}
+
+.item-title {
+    padding: 0.2rem 1rem;
 }
 
 .item-price {
@@ -417,6 +426,7 @@ input[type="submit"] {
 .wishlist-container,
 .my-auctions-container {
     display: block;
+    margin: 0 3rem;
 }
 
 .wishlist,
