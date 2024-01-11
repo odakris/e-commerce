@@ -4,6 +4,8 @@ from django.db import models
 from . import utils
 
 class User(AbstractUser):
+    # def __str__(self):
+    #     return f"{self.username} - id = {self.pk}"
     pass
 
 
@@ -27,6 +29,7 @@ class Auction(models.Model):
     bid_counter = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
     close_date = models.DateTimeField(auto_now_add=True, null=True)
+    winner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="auction_winner")
 
     class Meta:
         ordering = ["creation_date"]
