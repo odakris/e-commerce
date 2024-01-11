@@ -73,6 +73,10 @@
                 {% if context.message %}
                 <div class="error-msg">{{ context.message }}</div>
                 {% endif %}
+                {% if user == auction.winner %}
+                <div class="error-msg">You are the winner !</div>
+                {% endif %}
+
             </div>
         </div>
     </div>
