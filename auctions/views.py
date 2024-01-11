@@ -156,6 +156,108 @@ def sell(request):
     })
 
 
+def handle_wishlisting(request, current_auction, is_wishlisted):
+    # Add to wishlist
+    if request.POST["wishlist"] == "Add To Wishlist":
+        # Create wishlist item in model
+        new_wishlist = Wishlist(
+            user = request.user,
+            auction = current_auction
+        )
+        new_wishlist.save()
+        context = {
+            "message": "This item has been added to your wishlist !",
+            "wishlist": "Remove From Wishlist"
+        }
+    # Remove from wishlist
+    elif request.POST["wishlist"] == "Remove From Wishlist":
+        # Delete item from wishlist model
+        is_wishlisted.delete()
+        context = {
+            "message": "This item has been removed from your wishlist !",
+            "wishlist": "Add To Wishlist"
+        }
+    
+    return context
+
+
+def handle_bidding(request, current_auction, is_wishlisted, bid_form_data, default_context):
+    if bid_form_data.is_valid():
+        bid = bid_form_data.cleaned_data["bid"]
+        # Handle first bid 
+        if current_auction.bid_counter == 0 and bid < current_auction.bid:
+            context = {
+                "message": "Bid must be at least equal to starting bid",
+                "wishlist": default_context["wishlist"]
+            }
+        # Handle next bids
+        elif current_auction.bid_counter != 0 and bid <= current_auction.bid:
+            context = {
+                "message": "Bid must be higher than current bid",
+                "wishlist": default_context["wishlist"]
+            }
+        # Create bid in model
+        else: 
+            new_bid = Bid(
+                bidder = request.user,
+                auction = current_auction,
+                bid = bid,
+            )
+            new_bid.save()
+
+            current_auction.bid = bid
+            current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
+            current_auction.save()
+
+            # For any bid placed, add item to wishlist if not already
+            if not is_wishlisted: 
+                new_wishlist = Wishlist(
+                    user = request.user,
+                    auction = current_auction
+                )
+                new_wishlist.save()
+
+                context = {
+                    "message": "Bid placed !",
+                    "wishlist": "Remove From Wishlist"
+                }
+            else: 
+                context = {
+                    "message": "Bid placed !",
+                    "wishlist": default_context["wishlist"]
+                }
+
+    return context
+
+
+def handle_auction_closing(request, current_auction, closeButton):
+    # Set auction to non-active
+    current_auction.active = False
+    current_auction.winner = User.objects.get(pk=Bid.objects.filter(auction=current_auction).order_by("-bid").values('bidder')[0]['bidder'])
+    print(current_auction.winner)
+    current_auction.save()
+
+    context = {
+        "message": "Bid Closed !",
+        "closeButton": closeButton,
+    }
+
+    return context
+
+
+def handle_commenting(request, current_auction, comment_form_data):
+    if comment_form_data.is_valid():
+        comment = comment_form_data.cleaned_data["comment"]    
+        
+        #Create new comment
+        new_comment = Comment(
+            user = request.user,
+            auction = current_auction,
+            comment = comment
+        )
+        new_comment.save()
+
+
 def auction(request, auction_id):
     bid_form = BidForm()
     comment_form = CommentForm()
@@ -169,6 +271,8 @@ def auction(request, auction_id):
     default_context = {
         "wishlist": "Add To Wishlist",
     }
+
+    context = default_context.copy()
     
     # Check user wishlist
     if request.user.is_authenticated: 
@@ -192,113 +296,22 @@ def auction(request, auction_id):
         if not request.user.is_authenticated: 
             return render(request, "auctions/login.html")
         else:   
-            # Add to wishlist
-            if "wishlist" in request.POST and request.POST["wishlist"] == "Add To Wishlist":
-                # Create wishlist item in model
-                new_wishlist = Wishlist(
-                    user = request.user,
-                    auction = current_auction
-                )
-                new_wishlist.save()
-                context = {
-                    "message": "This item has been added to your wishlist !",
-                    "wishlist": "Remove From Wishlist"
-                }
-            # Remove from wishlist
-            elif "wishlist" in request.POST and request.POST["wishlist"] == "Remove From Wishlist":
-                # Delete item from wishlist model
-                is_wishlisted.delete()
-                context = {
-                    "message": "This item has been removed from your wishlist !",
-                    "wishlist": "Add To Wishlist"
-                }
+            # Wishlist
+            if "wishlist" in request.POST:
+                context = handle_wishlisting(request, current_auction, is_wishlisted)
             #  Bid
             elif "bid" in request.POST:
                 # Get bid informations from form
                 bid_form_data = BidForm(request.POST)
-                if bid_form_data.is_valid():
-                    bid = bid_form_data.cleaned_data["bid"]
-                    # Handle first bid 
-                    if current_auction.bid_counter == 0 and bid < current_auction.bid:
-                        context = {
-                            "message": "Bid must be at least equal to starting bid",
-                            "wishlist": default_context["wishlist"]
-                        }
-                    # Handle next bids
-                    elif current_auction.bid_counter != 0 and bid <= current_auction.bid:
-                        context = {
-                            "message": "Bid must be higher than current bid",
-                            "wishlist": default_context["wishlist"]
-                        }
-                    # Create bid in model
-                    else: 
-                        new_bid = Bid(
-                            bidder = request.user,
-                            auction = current_auction,
-                            bid = bid,
-                        )
-                        new_bid.save()
-
-                        current_auction.bid = bid
-                        current_auction.bid_counter = Bid.objects.filter(auction=current_auction).count()
-                        current_auction.save()
-
-                        # For any bid placed, add item to wishlist if not already
-                        if not is_wishlisted: 
-                            new_wishlist = Wishlist(
-                                user = request.user,
-                                auction = current_auction
-                            )
-                            new_wishlist.save()
-
-                            context = {
-                                "message": "Bid placed !",
-                                "wishlist": "Remove From Wishlist"
-                            }
-                        else: 
-                            context = {
-                                "message": "Bid placed !",
-                                "wishlist": default_context["wishlist"]
-                            }
-
+                context = handle_bidding(request, current_auction, is_wishlisted, bid_form_data, default_context)
             # Close auction
             elif "close" in request.POST:
-                # Set auction to non-active
-                current_auction.active = False
-                current_auction.winner = User.objects.get(pk=Bid.objects.filter(auction=current_auction).order_by("-bid").values('bidder')[0]['bidder'])
-                current_auction.save()
-
-                context = {
-                    "message": "Bid Closed !",
-                    "closeButton": closeButton,
-                }
-
+                context = handle_auction_closing(request, current_auction, closeButton)
             # Comment
             elif "comment" in request.POST:
                 comment_form_data = CommentForm(request.POST)
-                if comment_form_data.is_valid():
-                    comment = comment_form_data.cleaned_data["comment"]    
-                    
-                    #Create new comment
-                    new_comment = Comment(
-                        user = request.user,
-                        auction = current_auction,
-                        comment = comment
-                    )
-                    new_comment.save()
-
-                    context = default_context
-                
-        return render(request, "auctions/auction.html", {
-            "bid_form": bid_form,
-            "auction": current_auction,
-            "comment_form": comment_form,
-            "comments": comments,
-            "images": images,
-            "active": current_auction.active,
-            "context": context
-        })
-        
+                handle_commenting(request, current_auction, comment_form_data)
+                       
     # GET REQUESTS
     return render(request, "auctions/auction.html", {
         "bid_form": bid_form,
@@ -307,7 +320,7 @@ def auction(request, auction_id):
         "comments": comments,
         "images": images,
         "active": current_auction.active,
-        "context": default_context
+        "context": context
     })
 
         
