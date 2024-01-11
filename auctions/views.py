@@ -164,12 +164,9 @@ def auction(request, auction_id):
     images = ImagesUpload.objects.filter(auction=current_auction)
     comment_form = CommentForm()
     comments = Comment.objects.filter(auction=current_auction)
-    # isWishlisted = ""
+
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
-
-    # print(User.objects.get(pk=Bid.objects.filter(auction=current_auction).values('bidder')[0]['bidder']))
-    # print(request.user)
 
     default_context = {
         "wishlist": "Add To Wishlist",
@@ -177,8 +174,8 @@ def auction(request, auction_id):
     
     # Check user wishlist
     if request.user.is_authenticated: 
-        isWishlisted = Wishlist.objects.filter(user=request.user).filter(auction=current_auction)
-        if isWishlisted:
+        is_wishlisted = Wishlist.objects.filter(user=request.user).filter(auction=current_auction)
+        if is_wishlisted:
             default_context = {
                 "wishlist": "Remove From Wishlist"
             }
@@ -193,7 +190,6 @@ def auction(request, auction_id):
 
     # POST REQUESTS
     if request.method == "POST":
-        print(f"request.method: {request.POST}")
         # For any POST request user is ask to login of register
         if not request.user.is_authenticated: 
             return render(request, "auctions/login.html")
@@ -213,7 +209,7 @@ def auction(request, auction_id):
             # Remove from wishlist
             elif "wishlist" in request.POST and request.POST["wishlist"] == "Remove From Wishlist":
                 # Delete item from wishlist model
-                isWishlisted.delete()
+                is_wishlisted.delete()
                 context = {
                     "message": "This item has been removed from your wishlist !",
                     "wishlist": "Add To Wishlist"
@@ -250,7 +246,7 @@ def auction(request, auction_id):
                         current_auction.save()
 
                         # For any bid placed, add item to wishlist if not already
-                        if not isWishlisted: 
+                        if not is_wishlisted: 
                             new_wishlist = Wishlist(
                                 user = request.user,
                                 auction = current_auction
@@ -320,6 +316,12 @@ def auction(request, auction_id):
 def wishlist(request):
     # Get all wishlisted auctions by current user
     wishlist_items = Wishlist.objects.filter(user=request.user)
+
+    wishlist_auction = wishlist_items.auction
+
+    print(f"wishlist_items: {wishlist_items}")
+    print(f"wishlist_auction: {wishlist_auction}")
+
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
 
@@ -336,6 +338,8 @@ def myAuctions(request):
     my_closed_auctions = Auction.objects.filter(seller=request.user).filter(active=False)
     # Get auctions images
     images = getFirstImage(ImagesUpload.objects.all())
+
+    print(f"my_active_auctions: {my_active_auctions}")
 
     return render(request, 'auctions/my_auctions.html', {
         "active": my_active_auctions,
