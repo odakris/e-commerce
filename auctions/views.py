@@ -12,6 +12,9 @@ from .forms import SellForm, BidForm, CommentForm
 from .utils import *
 
 
+# REvoir images query to do it with Q (better way)
+
+
 def index(request):
     return render(request, "auctions/index.html")
 
