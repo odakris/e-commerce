@@ -1,10 +1,13 @@
 :root {
-    --navbar-head-height: 8rem;
+    --color1: #293847;
+    --color2: #4c5464;
+    --text-color: #fff;
+    --navbar-head-height: 5.5rem;
     --auth-padding-left: 3rem;
     --auth-icon-size: 3rem;
-    --navbar-links-height: 5rem;
-    --footer-height: 15rem;
-    --border-radius: 0.5rem;
+    --navbar-links-height: 6rem;
+    --footer-height: 10rem;
+    --border-radius: 5rem;
 }
 
 * {
@@ -12,8 +15,8 @@
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    font-family: Blinker, Helvetica, Arial, sans-serif;
-    border: 1px solid black;
+    font-family: Hind Madurai, Hind-fallback, Arial, sans-serif;
+    /* border: 1px solid black; */
 }
 
 /* RECURRENT CLASSES */
@@ -32,6 +35,8 @@ html {
 body {
     display: block;
     font-size: 1.6rem;
+    background-color: #f2f3f5;
+    /* background-color: red; */
 }
 
 .wrapper {
@@ -43,6 +48,10 @@ body,
     min-height: 100vh;
 }
 
+form input {
+    border: none;
+}
+
 /* NAVBAR */
 .navbar {
     display: block;
@@ -51,7 +60,8 @@ body,
     left: 0;
     width: 100%;
     border-bottom: 1px solid grey;
-    background-color: #fff;
+    background-color: var(--color1);
+    color: var(--text-color);
 }
 
 .navbar-head h1 {
@@ -68,6 +78,12 @@ body,
     justify-content: space-between;
 }
 
+.navbar-head a,
+.navbar-links a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
 .navbar-links {
     display: block;
     height: var(--navbar-links-height);
@@ -77,9 +93,24 @@ body,
     height: 100%;
 }
 
-.nav-item {
+.nav-item,
+.nav-item-page {
     display: inline-block;
     margin: 1rem;
+}
+
+.nav-link-page {
+    background-color: var(--color2);
+    padding: 0.5rem 1.6rem;
+    border: 2px solid transparent;
+    border-radius: 10rem;
+    font-weight: 600;
+}
+
+.nav-link-page:hover {
+    background-color: var(--color1);
+    transition-duration: .11s;
+    border-color: var(--text-color);
 }
 
 /* NAVBAR AUTH COLLAPSE */
@@ -154,6 +185,7 @@ body,
 
 .form-control {
     padding: 1.5rem;
+    border: 1px solid var(--color2);
 }
 
 .error-msg {
@@ -209,7 +241,7 @@ body,
 
 .sell textarea {
     padding: 1.5rem 1.2rem;
-    border-radius: var(--border-radius);
+    border-radius: 10px;
     width: 100%;
     height: 25rem;
     resize: none;
@@ -343,19 +375,53 @@ input[type="submit"] {
 /* AUCTION */
 .auction-container {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
+}
+
+.auction-container h2 {
+    width: 100%;
+    text-align: left;
+    padding: 2rem;
 }
 
 .auction {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* grid-gap: 2rem; */
     width: 100%;
-    border: 2px solid grey;
-    border-radius: 10px;
+    background-color: #fff;
     margin: 2rem 0;
     padding: 2rem;
+}
+
+.bid-form input[value="Place Bid"] {
+    background-color: #2bb04a;
+}
+
+.bid-form input[value="Place Bid"]:hover {
+    background-color: #1e8336;
+}
+
+.wishlist-form input,
+.comment-form input[value="Comment"],
+.sell-form input[value="Sell"] {
+    background-color: #096ec8;
+}
+
+.wishlist-form input:hover,
+.comment-form input[value="Comment"]:hover,
+.sell-form input[value="Sell"]:hover {
+    background-color: #064881;
+}
+
+.bid-form input[value="Place Bid"],
+.wishlist-form input,
+.comment-form input[value="Comment"],
+.sell-form input[value="Sell"] {
+    color: #fff;
+    font-weight: 600;
+    font-size: large;
+    border-radius: 10rem;
 }
 
 .auction-images .auction-images-small img {
@@ -363,12 +429,7 @@ input[type="submit"] {
     border-radius: 1rem;
     height: 5rem;
     width: 5rem;
-    border: 1px dotted grey;
     margin: 0.2rem;
-}
-
-.auction-images-small {
-    margin-top: 2rem;
 }
 
 .auction-details,
@@ -379,6 +440,10 @@ input[type="submit"] {
     flex-direction: column;
 }
 
+.auction-bid-container {
+    flex-direction: column;
+}
+
 .auction-details,
 .auction-bid-details {
     padding: 3rem;
@@ -386,11 +451,28 @@ input[type="submit"] {
 
 .auction-bid {
     justify-content: space-evenly;
-    height: 93%;
+    /* height: 93%; */
 }
 
 .auction-details {
     width: 100%;
+    border: 5px solid #fff;
+}
+
+.auction-label {
+    min-width: 20rem;
+}
+
+.auction-content {
+    min-width: 20rem;
+    width: calc(100% - 21rem);
+}
+
+.auction-label,
+.auction-content {
+    display: inline-block;
+    background-color: #fff;
+    padding: 1rem;
 }
 
 .auction-bid-form .btn,
@@ -401,6 +483,7 @@ input[type="submit"] {
 .auction-detail {
     width: 100%;
     margin: 1rem;
+    justify-content: space-between;
 }
 
 .auction-current-bid {
@@ -413,13 +496,41 @@ input[type="submit"] {
     border-radius: 1rem;
     height: 50rem;
     width: 50rem;
-    border: 1px dotted grey;
+    /* border: 1.5px solid var(--color2); */
     margin: 0.2rem;
 }
 
-.auction-label,
-.auction-content {
-    display: inline-block;
+.comment-container {
+    width: 100%;
+    border: 5px solid #fff;
+}
+
+.comment,
+.comment-details {
+    min-width: 50rem;
+    width: 50%;
+}
+
+.comment {
+    border: 1px solid var(--color2);
+    border-radius: 1.5rem;
+    padding: 1rem 2rem;
+    margin: 2rem 5rem 0 2rem;
+    background-color: #fff;
+}
+
+.comment-details p {
+    text-align: right;
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.comment-form {
+    margin: 5rem;
+}
+
+.comment-form input {
+    width: 100%;
 }
 
 /* WISHLIST and MY AUCTIONS*/
@@ -448,4 +559,16 @@ input[type="submit"] {
     height: var(--footer-height);
     margin-top: auto;
     border-top: 1px solid black;
+    background-color: var(--color1)
+}
+
+
+.footer p,
+.footer a {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.footer a {
+    text-decoration: none;
 }

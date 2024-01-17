@@ -13,7 +13,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="auction-bid-container">
+        <div class="auction-bid-container flex">
             <div class="auction-bid flex">
                 <h1>{{ auction.title }}</h1>
                 <div class="auction-bid-details flex">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="auction-forms">
-                    <div class="bid_form">
+                    <div class="bid-form">
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-bid-form flex">
                             {% csrf_token %}
@@ -54,7 +54,7 @@
                         </form>
                     </div>
                     {% else %}
-                    <div class=" wishlist-form">
+                    <div class="wishlist-form">
                         <form action="{% url 'auctions:auction' auction.pk %}" method="POST"
                             class="auction-wishlist-form flex">
                             {% csrf_token %}
@@ -80,29 +80,32 @@
             </div>
         </div>
     </div>
+    <h2>DETAILS</h2>
     <div class="auction-details flex">
-        <div class="auction-description auction-detail">
+        <div class="auction-description auction-detail flex">
             <p class="auction-label">Description</p>
             <p class="auction-content">{{ auction.description }}</p>
         </div>
-        <div class="auction-category auction-detail">
+        <div class="auction-category auction-detail flex">
             <p class="auction-label">Category</p>
             <p class="auction-content">{{ auction.category }}</p>
         </div>
-        <div class="auction-seller auction-detail">
+        <div class="auction-seller auction-detail flex">
             <p class="auction-label">Seller</p>
             <p class="auction-content">{{ auction.seller }}</p>
         </div>
-        <div class="auction-creation-date auction-detail">
+        <div class="auction-creation-date auction-detail flex">
             <p class="auction-label">Online since</p>
             <p class="auction-content">{{ auction.creation_date }}</p>
         </div>
     </div>
+    <h2>COMMENTS</h2>
+    <div class="comment-container">
+        {% include "./comment.html" %}
+    </div>
 </div>
 
-<div class="comment-container">
-    {% include "./comment.html" %}
-</div>
+
 
 <script>
     const auctionImagesBig = document.querySelector(".auction-images-big")

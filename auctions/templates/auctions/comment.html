@@ -1,11 +1,10 @@
-<h1>COMMENTS</h1>
 <div class="comment-display">
     {% for comment in comments %}
     <div class="comment">
         <p>{{ comment.comment }}</p>
-        <div class="comment-details">
-            <p>{{ comment.user }} - {{ comment.comment_date }}</p>
-        </div>
+    </div>
+    <div class="comment-details">
+        <p>{{ comment.user }} - {{ comment.comment_date }}</p>
     </div>
     {% endfor %}
 </div>

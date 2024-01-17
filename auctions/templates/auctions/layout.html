@@ -47,34 +47,34 @@
             </div>
             <div class="navbar-links">
                 <ul class="nav flex">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auctions:index' %}">Home</a>
+                    <li class="nav-item-page">
+                        <a class="nav-link-page" href="{% url 'auctions:index' %}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auctions:categories' %}">Categories</a>
+                    <li class="nav-item-page">
+                        <a class="nav-link-page" href="{% url 'auctions:categories' %}">Categories</a>
                     </li>
 
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auctions:sell' %}">Sell</a>
+                    <li class="nav-item-page">
+                        <a class="nav-link-page" href="{% url 'auctions:sell' %}">Sell</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auctions:wishlist' %}">Wishlist</a>
+                    <li class="nav-item-page">
+                        <a class="nav-link-page" href="{% url 'auctions:wishlist' %}">Wishlist</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'auctions:myauctions' %}">My Auctions</a>
+                    <li class="nav-item-page">
+                        <a class="nav-link-page" href="{% url 'auctions:myauctions' %}">My Auctions</a>
                     </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
 
-        <!-- <hr> -->
         <div class="container">
             {% block body %}
             {% endblock %}
         </div>
-        <div class="flex footer media-query-footer">
+
+        <div class="flex footer">
             <p><a href="https://cs50.harvard.edu/web/2020/projects/2/commerce/" target="_blank">Project 2 - Commerce</a>
             </p>
             <p><a href="https://www.youtube.com/watch?v=Nn7EX3zkGUo&list=PLhQjrBD2T380xvFSUmToMMzERZ3qB5Ueu"
