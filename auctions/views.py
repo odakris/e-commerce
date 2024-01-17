@@ -79,7 +79,7 @@ def categories(request):
         "all": "All",
         "category": "ALL",
         "categories": Category.objects.all(),
-        "auctions": Auction.objects.filter(active=True),
+        "auctions": Auction.objects.filter(active=True).order_by('?'),
         "images": images
     })
 

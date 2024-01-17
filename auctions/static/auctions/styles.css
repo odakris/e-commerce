@@ -1,13 +1,15 @@
 :root {
+    --color0: #fff;
     --color1: #293847;
     --color2: #4c5464;
-    --text-color: #fff;
+    --color-body: #f2f3f5;
     --navbar-head-height: 5.5rem;
     --auth-padding-left: 3rem;
     --auth-icon-size: 3rem;
     --navbar-links-height: 6rem;
     --footer-height: 10rem;
     --border-radius: 5rem;
+    --border: 3px solid var(--color1);
 }
 
 * {
@@ -35,7 +37,7 @@ html {
 body {
     display: block;
     font-size: 1.6rem;
-    background-color: #f2f3f5;
+    background-color: var(--color-body);
     /* background-color: red; */
 }
 
@@ -59,9 +61,10 @@ form input {
     top: 0;
     left: 0;
     width: 100%;
-    border-bottom: 1px solid grey;
+    /* border-bottom: 1px solid grey; */
     background-color: var(--color1);
-    color: var(--text-color);
+    color: var(--color0);
+    z-index: 99;
 }
 
 .navbar-head h1 {
@@ -80,7 +83,7 @@ form input {
 
 .navbar-head a,
 .navbar-links a {
-    color: var(--text-color);
+    color: var(--color0);
     text-decoration: none;
 }
 
@@ -99,6 +102,11 @@ form input {
     margin: 1rem;
 }
 
+.nav-link {
+    color: var(--color2) !important;
+    font-weight: 600;
+}
+
 .nav-link-page {
     background-color: var(--color2);
     padding: 0.5rem 1.6rem;
@@ -110,7 +118,7 @@ form input {
 .nav-link-page:hover {
     background-color: var(--color1);
     transition-duration: .11s;
-    border-color: var(--text-color);
+    border-color: var(--color0);
 }
 
 /* NAVBAR AUTH COLLAPSE */
@@ -136,23 +144,26 @@ form input {
     width: 10rem;
     position: relative;
     top: calc(var(--navbar-head-height) - var(--navbar-head-height)/2);
-    right: 6.5rem;
+    right: 6.8rem;
     transition: all 0.2s ease-in-out;
     opacity: 0;
     overflow: hidden;
 }
 
 .authentication input:checked~.auth-collapse-content {
-    max-height: 15rem;
-    /* max-width: 10rem; */
-    top: var(--navbar-head-height);
-    border: 1px solid black;
+    min-height: 10rem;
+    max-height: 20rem;
+    top: calc(var(--navbar-head-height) + 5rem);
+    border: 2px solid var(--color2);
     opacity: 1;
+    background-color: var(--color-body);
+    color: var(--color2);
 }
 
 .fa-circle-user,
 .fa-chevron-up {
     font-size: var(--auth-icon-size);
+    padding: 0.2rem;
 }
 
 /* CONTAINER */
@@ -183,6 +194,11 @@ form input {
     cursor: pointer;
 }
 
+.btn-disable {
+    background-color: var(--color2) !important;
+    color: var(--color1) !important;
+}
+
 .form-control {
     padding: 1.5rem;
     border: 1px solid var(--color2);
@@ -192,7 +208,6 @@ form input {
     color: red;
     margin: 1rem 0;
     text-align: center;
-
 }
 
 /* SELL */
@@ -203,6 +218,12 @@ form input {
 .sell-label,
 .sell-input {
     width: 100%;
+}
+
+.sell {
+    border: var(--border);
+    background-color: var(--color0);
+    padding: 2rem 5rem;
 }
 
 .sell,
@@ -276,7 +297,7 @@ form input {
 }
 
 .uploaded-image img {
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 1rem;
     height: 15.5rem;
     width: 15.5rem;
@@ -302,24 +323,42 @@ input[type="submit"] {
 
 .nav-categories {
     margin: 3rem 0 4rem 0;
+    flex-wrap: wrap;
 }
 
 .nav-categories-item {
     list-style-type: none;
 }
 
-.nav-categories-link {
+.nav-categories-link,
+.connection-form input[value="Login"],
+.connection-form input[value="Register"] {
+    min-width: 5rem;
+    text-align: center;
     margin: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     text-decoration: none;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    border-radius: 1rem;
+    border: 2px solid var(--color2);
+    border-radius: 10rem;
+    color: var(--color1);
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.nav-categories-link:hover,
+.connection-form input[value="Login"]:hover,
+.connection-form input[value="Register"]:hover {
+    color: var(--color0);
+    background-color: var(--color2);
 }
 
 .items-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 2rem;
+    /* border: var(--border);
+    padding: 2rem;
+    height: 100%; */
 }
 
 .items-container a {
@@ -330,9 +369,14 @@ input[type="submit"] {
 .item {
     flex-direction: column;
     justify-content: space-between;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    border-radius: 1rem;
-    padding: 0.5rem;
+    /* border: 2px solid var(--color2); */
+    background-color: var(--color0);
+    /* padding: 1rem; */
+    transition: .3s all ease-in-out;
+}
+
+.item:hover {
+    transform: scale(1.05);
 }
 
 .item-img,
@@ -340,19 +384,34 @@ input[type="submit"] {
     width: 100%;
 }
 
+.item-details {
+    padding: 1rem;
+}
+
 .item-img img {
     aspect-ratio: 1/1;
-    object-fit: cover;
+    object-fit: scale-down;
     max-width: 100%;
-    border-radius: 1rem;
+    /* border-radius: 1rem; */
 }
 
 .item-title {
     padding: 0.2rem 1rem;
+    font-size: 2rem;
+    min-height: 10rem;
 }
 
 .item-price {
     justify-content: space-between;
+}
+
+.item-price p:first-child {
+    font-weight: 600;
+}
+
+.item-price p:last-child {
+    color: var(--color2);
+    font-style: italic;
 }
 
 .item-price p {
@@ -389,7 +448,8 @@ input[type="submit"] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--color0);
+    border: var(--border);
     margin: 2rem 0;
     padding: 2rem;
 }
@@ -418,14 +478,14 @@ input[type="submit"] {
 .wishlist-form input,
 .comment-form input[value="Comment"],
 .sell-form input[value="Sell"] {
-    color: #fff;
+    color: var(--color0);
     font-weight: 600;
     font-size: large;
     border-radius: 10rem;
 }
 
 .auction-images .auction-images-small img {
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 1rem;
     height: 5rem;
     width: 5rem;
@@ -442,6 +502,7 @@ input[type="submit"] {
 
 .auction-bid-container {
     flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .auction-details,
@@ -451,28 +512,39 @@ input[type="submit"] {
 
 .auction-bid {
     justify-content: space-evenly;
-    /* height: 93%; */
 }
 
 .auction-details {
     width: 100%;
-    border: 5px solid #fff;
-}
-
-.auction-label {
-    min-width: 20rem;
-}
-
-.auction-content {
-    min-width: 20rem;
-    width: calc(100% - 21rem);
+    border: var(--border);
+    background-color: var(--color0);
 }
 
 .auction-label,
 .auction-content {
-    display: inline-block;
-    background-color: #fff;
+    background-color: var(--color-body);
+}
+
+.auction-detail {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: 1rem;
+    min-height: 4rem;
+}
+
+.auction-detail p {
     padding: 1rem;
+}
+
+.auction-label {
+    grid-column: 1/2;
+}
+
+.auction-content {
+    grid-column: 2/6;
 }
 
 .auction-bid-form .btn,
@@ -480,29 +552,29 @@ input[type="submit"] {
     margin: 1rem 0;
 }
 
-.auction-detail {
-    width: 100%;
-    margin: 1rem;
-    justify-content: space-between;
-}
-
 .auction-current-bid {
-    font-size: 3rem;
+    font-size: 6rem;
     margin: 2rem;
+    color: red;
+    font-weight: 600;
 }
 
 .auction-images-big img {
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 1rem;
     height: 50rem;
     width: 50rem;
-    /* border: 1.5px solid var(--color2); */
     margin: 0.2rem;
+}
+
+.auction-msg {
+    height: 3rem;
 }
 
 .comment-container {
     width: 100%;
-    border: 5px solid #fff;
+    border: var(--border);
+    background-color: var(--color0);
 }
 
 .comment,
@@ -516,7 +588,7 @@ input[type="submit"] {
     border-radius: 1.5rem;
     padding: 1rem 2rem;
     margin: 2rem 5rem 0 2rem;
-    background-color: #fff;
+    background-color: var(--color-body);
 }
 
 .comment-details p {
@@ -565,7 +637,7 @@ input[type="submit"] {
 
 .footer p,
 .footer a {
-    color: var(--text-color);
+    color: var(--color0);
     font-weight: 600;
 }
 
