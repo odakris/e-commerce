@@ -22,7 +22,6 @@
                     {% else %}
                     <div class="auction-current-bid">{{ auction.bid|floatformat:2 }} $</div>
                     {% endif %}
-
                     <a href="{% url 'auctions:auction_bids' auction.pk %}">
                         <div class="auction-bid-counter">
                             {% if auction.bid_counter == 0 %}
