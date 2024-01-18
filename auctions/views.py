@@ -164,6 +164,7 @@ def auction(request, auction_id):
     current_auction = Auction.objects.get(pk=auction_id)
     comments = Comment.objects.filter(auction=current_auction)
     images = ImagesUpload.objects.filter(auction=current_auction)
+    all_auction_bid = Bid.objects.filter(auction=current_auction)
 
     # Defined if current auction is user's or not
     closeButton = isUserAuction(request.user, current_auction.pk)
@@ -175,14 +176,16 @@ def auction(request, auction_id):
     # Check user wishlist
     if request.user.is_authenticated: 
         is_wishlisted = Wishlist.objects.filter(user=request.user, auction=current_auction)
-        highest_bid = Bid.objects.filter(auction=current_auction).order_by('-bid')[0]
 
-        if is_wishlisted and request.user == highest_bid.bidder:
-            default_context = {
-                "message": "You currently got the highest bid !",
-                "wishlist": "Remove From Wishlist"
-            }
-        else:
+        if all_auction_bid:
+            highest_bid = Bid.objects.filter(auction=current_auction).order_by('-bid')[0]
+
+            if is_wishlisted and request.user == highest_bid.bidder:
+                default_context = {
+                    "message": "You currently got the highest bid !",
+                    "wishlist": "Remove From Wishlist"
+                }
+        elif is_wishlisted:
             default_context = {
                 "wishlist": "Remove From Wishlist"
             }
@@ -262,4 +265,14 @@ def myAuctions(request):
         "active": my_active_auctions,
         "closed": my_closed_auctions,
         "images": images
+    })
+
+
+def auction_bids(request, auction_id):
+    current_auction = Auction.objects.get(pk=auction_id)
+    all_auction_bid = Bid.objects.filter(auction=current_auction).order_by('-bid')
+
+    return render(request, 'auctions/auction_bids.html', {
+        "auction": current_auction,
+        "bids": all_auction_bid,
     })
