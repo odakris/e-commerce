@@ -136,7 +136,7 @@ def sell(request):
                 title = title,
                 category = Category.objects.get(pk = category),
                 description = description,
-                bid = starting_bid
+                start_bid = starting_bid
             )
             new_auction.save()
 
@@ -175,7 +175,14 @@ def auction(request, auction_id):
     # Check user wishlist
     if request.user.is_authenticated: 
         is_wishlisted = Wishlist.objects.filter(user=request.user, auction=current_auction)
-        if is_wishlisted:
+        highest_bid = Bid.objects.filter(auction=current_auction).order_by('-bid')[0]
+
+        if is_wishlisted and request.user == highest_bid.bidder:
+            default_context = {
+                "message": "You currently got the highest bid !",
+                "wishlist": "Remove From Wishlist"
+            }
+        else:
             default_context = {
                 "wishlist": "Remove From Wishlist"
             }
@@ -225,7 +232,7 @@ def auction(request, auction_id):
         
 def wishlist(request):
     # Get all on going wishlisted auctions
-    on_going_wishlist = Wishlist.objects.filter(Q(auction__active=True))
+    on_going_wishlist = Wishlist.objects.filter(Q(user=request.user) & Q(auction__active=True))
 
     # Get all won auctions wishlisted auctions
     won_wishlist = Wishlist.objects.filter(Q(user=request.user) & Q(auction__active=False) & Q(auction__winner=request.user))
