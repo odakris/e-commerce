@@ -11,12 +11,19 @@
         <div class="item-details">
             <p class="item-title">{{ auction.title }}</p>
             <div class="item-price flex">
-                <p>{{ auction.bid }} $</p>
+                <!-- {% if auction.bid_counter == 0 %}
+                <p>{{ auction.start_bid|floatformat:2 }} $</p>
+                {% else %}
+                <p>{{ auction.bid|floatformat:2 }} $</p>
+                {% endif %} -->
                 {% if auction.bid_counter == 0 %}
+                <p>{{ auction.start_bid|floatformat:2 }} $</p>
                 <p>No bids yet</p>
                 {% elif auction.bid_counter == 1 %}
+                <p>{{ auction.bid|floatformat:2 }} $</p>
                 <p>{{ auction.bid_counter }} bid</p>
                 {% else %}
+                <p>{{ auction.bid|floatformat:2 }} $</p>
                 <p>{{ auction.bid_counter }} bids</p>
                 {% endif %}
             </div>

@@ -17,7 +17,12 @@
             <div class="auction-bid flex">
                 <h1>{{ auction.title }}</h1>
                 <div class="auction-bid-details flex">
-                    <div class="auction-current-bid">{{ auction.bid }} $</div>
+                    {% if auction.bid_counter == 0 %}
+                    <div class="auction-current-bid">{{ auction.start_bid|floatformat:2 }} $</div>
+                    {% else %}
+                    <div class="auction-current-bid">{{ auction.bid|floatformat:2 }} $</div>
+                    {% endif %}
+
                     <div class="auction-bid-counter">
                         {% if auction.bid_counter == 0 %}
                         <p>No bids yet</p>
@@ -34,7 +39,7 @@
                             class="auction-bid-form flex">
                             {% csrf_token %}
                             {{ bid_form }}
-                            {% if active %}
+                            {% if active and user != auction.seller %}
                             <input type="submit" value="Place Bid" class="btn">
                             {% else %}
                             <input type="submit" value="Place Bid" class="btn btn-disable" disabled>
@@ -85,7 +90,7 @@
     <div class="auction-details flex">
         <div class="auction-description auction-detail">
             <p class="auction-label">Description</p>
-            <p class="auction-content">{{ auction.description }}</p>
+            <p class="auction-content">{{ auction.description|linebreaksbr }}</p>
         </div>
         <div class="auction-category auction-detail">
             <p class="auction-label">Category</p>
