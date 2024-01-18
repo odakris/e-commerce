@@ -23,15 +23,17 @@
                     <div class="auction-current-bid">{{ auction.bid|floatformat:2 }} $</div>
                     {% endif %}
 
-                    <div class="auction-bid-counter">
-                        {% if auction.bid_counter == 0 %}
-                        <p>No bids yet</p>
-                        {% elif auction.bid_counter == 1 %}
-                        <p>{{ auction.bid_counter }} bid</p>
-                        {% else %}
-                        <p>{{ auction.bid_counter }} bids</p>
-                        {% endif %}
-                    </div>
+                    <a href="{% url 'auctions:auction_bids' auction.pk %}">
+                        <div class="auction-bid-counter">
+                            {% if auction.bid_counter == 0 %}
+                            <p>No bids yet</p>
+                            {% elif auction.bid_counter == 1 %}
+                            <p>{{ auction.bid_counter }} bid</p>
+                            {% else %}
+                            <p>{{ auction.bid_counter }} bids</p>
+                            {% endif %}
+                        </div>
+                    </a>
                 </div>
                 <div class="auction-forms">
                     <div class="bid-form">

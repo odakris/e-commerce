@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="auction-bid-container">
+    <h2>BIDS</h2>
+    <div class="auction-bids auction-details flex">
+        <div class="auction-detail">
+            <p class="auction-label-bid">Username</p>
+            <p class="auction-content-bid">Bid</p>
+            <p class="auction-date-bid">Date</p>
+        </div>
+        {% for bid in bids %}
+        <div class="auction-detail">
+            <p class="auction-label-bid">{{ bid.bidder }}</p>
+            <p class="auction-content-bid">{{ bid.bid }} $</p>
+            <p class="auction-date-bid">{{ bid.bid_date }}</p>
+        </div>
+        {% endfor %}
+        <div class="auction-detail">
+            <p class="auction-label-bid">Starting bid</p>
+            <p class="auction-content-bid">{{ auction.start_bid }}</p>
+            <p class="auction-date-bid">{{ auction.creation_date }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
