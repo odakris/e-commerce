@@ -16,7 +16,15 @@ from .utils import *
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    trending = Auction.objects.order_by("-bid_counter")[:4]
+    new = Auction.objects.order_by("-creation_date")[:4]
+    images = getFirstImage(ImagesUpload.objects.all())
+
+    return render(request, "auctions/index.html", {
+        "trending": trending,
+        "new": new,
+        "images": images
+    })
 
 
 def login_view(request):
