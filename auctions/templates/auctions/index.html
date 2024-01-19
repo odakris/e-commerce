@@ -1,7 +1,43 @@
 {% extends "auctions/layout.html" %}
-
+{% load static %}
 {% block body %}
-<h2>Home</h2>
+<div class="home-container">
+    <h2>HOME</h2>
+    <div class="banner-grid">
+        <a href="{% url 'auctions:filter' 'Home & Garden' %}" class="image-container banner-homegarden">
+            <img src="{% static 'auctions/images/homegarden.jpg' %}" class="banner-grid-img">
+            <p>HOME<br>&<br>GARDEN</p>
+        </a>
+        <a href="{% url 'auctions:filter' 'Computers' %}" class="image-container banner-computer">
+            <img src="{% static 'auctions/images/computer.jpg' %}" class="banner-grid-img">
+            <p>COMPUTER</p>
+        </a>
+        <a href="{% url 'auctions:filter' 'Sport' %}" class="image-container banner-sport">
+            <img src="{% static 'auctions/images/sport.jpg' %}" class="banner-grid-img">
+            <p>SPORT</p>
+        </a>
+    </div>
+    <h2>NEW</h2>
+    <div class="items-container">
+        {% for auction in new %}
+        {% include "./item.html" %}
+        {% endfor %}
+    </div>
+    <h2>TRENDING</h2>
+    <div class="items-container">
+        {% for auction in trending %}
+        {% include "./item.html" %}
+        {% endfor %}
+    </div>
+    <h2>VIDEO GAMES</h2>
+    <div class="banner-video-game">
+        <img src="{% static 'auctions/images/pexels-cottonbro-studio-3945663.jpg' %}"
+            alt="pexels-cottonbro-studio-3945655.jpg" class="banner-image">
+        <form method="POST" action="{% url 'auctions:filter' 'Video Games' %}" class="banner-form">
+            {% csrf_token %}
+            <input type="submit" value="Discover our gaming items" class="banner-btn">
+        </form>
+    </div>
 
-TODO
+</div>
 {% endblock %}
