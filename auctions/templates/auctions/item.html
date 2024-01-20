@@ -6,16 +6,10 @@
             <img src="{{ image.upload.url }}">
             {% endif %}
             {% endfor %}
-            <!-- <img src="/media/{{ auction.first_image }}"> -->
         </div>
         <div class="item-details">
             <p class="item-title">{{ auction.title }}</p>
             <div class="item-price flex">
-                <!-- {% if auction.bid_counter == 0 %}
-                <p>{{ auction.start_bid|floatformat:2 }} $</p>
-                {% else %}
-                <p>{{ auction.bid|floatformat:2 }} $</p>
-                {% endif %} -->
                 {% if auction.bid_counter == 0 %}
                 <p>{{ auction.start_bid|floatformat:2 }} $</p>
                 <p>No bids yet</p>

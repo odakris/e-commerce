@@ -13,7 +13,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="auction-bid-container">
+        <div class="auction-bid-container flex">
             <div class="auction-bid flex">
                 <h1>{{ auction.title }}</h1>
                 <div class="auction-bid-details flex">
@@ -81,7 +81,7 @@
                 <div class="error-msg">{{ context.message }}</div>
                 {% elif not active and user == auction.winner %}
                 <div class="error-msg">Congratulation ! This auction is now yours.</div>
-                {% elif not active %}
+                {% elif not active and user != auction.seller %}
                 <div class="error-msg">Unfortunatly, someone else won this auction.</div>
                 {% endif %}
             </div>
@@ -112,15 +112,12 @@
     </div>
 </div>
 
-
-
 <script>
     const auctionImagesBig = document.querySelector(".auction-images-big")
     const smallImg = document.querySelectorAll(".small-img")
 
     const displayImage = (e) => {
         let bigImages = ""
-        // console.log(e.currentTarget.src)
         bigImages = `<img src="${e.currentTarget.src}" alt="${e.currentTarget.src}">`
         auctionImagesBig.innerHTML = bigImages;
     }

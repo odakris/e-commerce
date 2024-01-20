@@ -5,19 +5,14 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Q
 
-# from django.db.models import OuterRef, Subquery
-
 from .models import User, Category, Auction, ImagesUpload, Bid, Wishlist, Comment
 from .forms import SellForm, BidForm, CommentForm
 from .utils import *
 
 
-# REvoir images query to do it with Q (better way)
-
-
 def index(request):
-    trending = Auction.objects.order_by("-bid_counter")[:4]
-    new = Auction.objects.order_by("-creation_date")[:4]
+    trending = Auction.objects.filter(active=True).order_by("-bid_counter")[:4]
+    new = Auction.objects.filter(active=True).order_by("-creation_date")[:4]
     images = getFirstImage(ImagesUpload.objects.all())
 
     return render(request, "auctions/index.html", {
@@ -107,23 +102,6 @@ def filter(request, filter):
         "images": images
     })
     
-# def categories(request):
-#     auctions_with_images = Auction.objects.annotate(
-#         first_image=Subquery(
-#             ImagesUpload.objects.filter(auction=OuterRef('pk')).values('upload')[:1]
-#         )
-#     )
-
-#     for auction in auctions_with_images:
-#         print(auction.first_image)
-
-#     return render(request, "auctions/categories.html", {
-#         "title": "All",
-#         "categories": Category.objects.all(),
-#         "auctions": auctions_with_images,
-#         "MEDIA_URL": MEDIA_URL
-#     })
-
 
 def sell(request):
     sell_form = SellForm()
@@ -242,11 +220,15 @@ def wishlist(request):
     # Get all on going wishlisted auctions
     on_going_wishlist = Wishlist.objects.filter(Q(user=request.user) & Q(auction__active=True))
 
-    # Get all won auctions wishlisted auctions
-    won_wishlist = Wishlist.objects.filter(Q(user=request.user) & Q(auction__active=False) & Q(auction__winner=request.user))
+    # Get all won auctions
+    won_wishlist = Auction.objects.filter(active=False, winner=request.user)
 
-    # Get all lost auctions wishlisted auctions
-    lost_wishlist = Wishlist.objects.filter(Q(user=request.user) & Q(auction__active=False) & ~Q(auction__winner=request.user))
+    # Get all lost auctions 
+    lost_items = Bid.objects.filter(Q(bidder=request.user) & Q(auction__active=False) & ~Q(auction__winner=request.user)).order_by().values_list('auction', flat=True).distinct()
+    
+    lost_wishlist = []
+    for auction_id in lost_items:
+        lost_wishlist.append(Auction.objects.get(pk=auction_id))
 
     images = getFirstImage(ImagesUpload.objects.all())
 

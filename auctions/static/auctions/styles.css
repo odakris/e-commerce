@@ -31,7 +31,6 @@
 .nav-categories-link,
 .connection-form input[value="Login"],
 .connection-form input[value="Register"] {
-    min-width: 5rem;
     text-align: center;
     margin: 0.5rem;
     padding: 0.5rem 1rem;
@@ -81,6 +80,28 @@ body,
 
 form input {
     border: none;
+}
+
+.form-control,
+.btn {
+    width: 35rem;
+    height: 4rem;
+    margin: 0.8rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.form-control {
+    padding: 1.5rem;
+    border: 1px solid var(--color2);
+    width: 100%;
+}
+
+.error-msg {
+    color: red;
+    margin: 1rem 0;
+    text-align: center;
+    font-weight: 600;
 }
 
 /* HOME */
@@ -153,8 +174,9 @@ form input {
 
 .banner-form {
     position: absolute;
-    top: 30rem;
-    left: 10rem;
+    top: 65%;
+    left: 30%;
+    transform: translate(-50%, -50%);
 }
 
 .banner-btn {
@@ -296,36 +318,22 @@ form input {
 /* LOGIN - REGISTER */
 .connection {
     flex-direction: column;
+    margin: auto;
+    width: 40rem;
 }
 
 .connection-form {
     margin: 2rem 0;
+    width: 100%;
 }
 
-.form-control,
-.btn {
+.connection-form input {
     width: 100%;
-    height: 4rem;
-    margin: 0.8rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
 }
 
 .btn-disable {
     background-color: var(--color2) !important;
     color: var(--color1) !important;
-}
-
-.form-control {
-    padding: 1.5rem;
-    border: 1px solid var(--color2);
-}
-
-.error-msg {
-    color: red;
-    margin: 1rem 0;
-    text-align: center;
-    font-weight: 600;
 }
 
 /* SELL */
@@ -543,8 +551,6 @@ input[type="submit"] {
 
 .auction-bid-container {
     grid-column: 2 / 3;
-    margin: auto;
-    width: 100%;
 }
 
 .auction-forms {
@@ -609,6 +615,7 @@ input[type="submit"] {
 .auction-bid {
     justify-content: space-evenly;
     text-align: center;
+    width: 100%;
 }
 
 .auction-details {
@@ -647,6 +654,7 @@ input[type="submit"] {
 .auction-bid-form .btn,
 .auction-wishlist-form .btn {
     margin: 1rem 0;
+    width: 100%;
 }
 
 .auction-current-bid {
@@ -666,7 +674,7 @@ input[type="submit"] {
 }
 
 .auction-msg {
-    height: 3rem;
+    height: 5rem;
 }
 
 /* COMMENT */
@@ -749,7 +757,6 @@ input[type="submit"] {
 .wishlist-container,
 .my-auctions-container {
     display: block;
-    margin: 0 3rem;
 }
 
 .wishlist,
@@ -794,18 +801,22 @@ input[type="submit"] {
 /* MEDIA QUERY */
 
 /* MOBILE - SMARTPHONE */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
 
     /* NAVBAR */
     .nav-item-page {
         font-size: 1.2rem;
-        margin: 0.4rem;
+    }
+
+    /* LOGIN */
+    .connection {
+        width: 90%;
     }
 
     /* HOMEPAGE */
     .banner-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: 3fr;
+        grid-template-rows: 1fr 1fr 1fr;
     }
 
     .banner-homegarden {
@@ -823,27 +834,32 @@ input[type="submit"] {
         grid-row: 3 / 4;
     }
 
-    .image-container p {
-        visibility: visible;
-        opacity: 1;
-
+    .categories>.items-container,
+    .home-container>.items-container,
+    .my-auctions>.items-container,
+    .wishlist>.items-container {
+        grid-template-columns: 1fr !important;
     }
 
-    .items-container {
-        grid-template-columns: 1fr;
+    /* SELL */
+    .uploaded-image img {
+        height: 18.3rem !important;
+        width: 18.3rem !important;
     }
 
-    .banner-form {
-        top: 6rem;
-        left: 3rem;
+    .queued-images {
+        height: 19rem;
     }
+}
 
-    .banner-btn {
-        font-size: 1.3rem;
-        background-color: transparent;
-        color: var(--color2);
-        padding: 1.5rem 0.8rem;
-        border: 4px solid var(--color2);
+
+/* TABLETS */
+@media screen and (max-width: 768px) {
+
+    /* NAVBAR */
+    .nav-item-page {
+        font-size: 1.25rem;
+        margin: 0.4rem;
     }
 
     /* AUCTION */
@@ -862,14 +878,6 @@ input[type="submit"] {
         grid-row: 2 / 3;
     }
 
-    .item-title {
-        font-size: 3rem;
-    }
-
-    .item-price {
-        font-size: 2rem;
-    }
-
     /* SELL */
     .sell select[name="category"],
     .sell input[type="number"] {
@@ -877,8 +885,35 @@ input[type="submit"] {
     }
 
     .uploaded-image img {
-        height: 15.3rem;
-        width: 15.3rem;
+        height: 15.15rem;
+        width: 15.15rem;
+    }
+
+    /* HOMEPAGE */
+    .image-container p {
+        visibility: visible;
+        opacity: 1;
+        font-size: 3.5rem;
+    }
+
+    .items-container {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .item-title {
+        font-size: 2.5rem !important;
+    }
+
+    .item-price {
+        font-size: 2rem !important;
+    }
+
+    .banner-btn {
+        font-size: 1.3rem;
+        background-color: transparent;
+        color: var(--color2);
+        padding: 1.5rem 0.8rem;
+        border: 4px solid var(--color2);
     }
 
     /* FOOTER */
@@ -890,5 +925,22 @@ input[type="submit"] {
     .footer p {
         margin: 0.5rem;
     }
+}
 
+
+/* TABLET PORTRAIT */
+@media screen and (max-width: 1024px) {
+
+    /* HOMEPAGE */
+    .items-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .item-title {
+        font-size: 2.3rem;
+    }
+
+    .item-price {
+        font-size: 1.5rem;
+    }
 }

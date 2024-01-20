@@ -25,10 +25,8 @@
         {% if won %}
         <h3>Won Auctions</h3>
         <div class="items-container">
-            {% for item in won %}
-            {% with item.auction as auction %}
+            {% for auction in won %}
             {% include "./item.html" %}
-            {% endwith %}
             {% endfor %}
         </div>
         {% endif %}
@@ -37,10 +35,8 @@
         {% if lost %}
         <h3>Lost Auctions</h3>
         <div class="items-container">
-            {% for item in lost %}
-            {% with item.auction as auction %}
+            {% for auction in lost %}
             {% include "./item.html" %}
-            {% endwith %}
             {% endfor %}
         </div>
         {% endif %}
