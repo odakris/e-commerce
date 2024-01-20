@@ -168,7 +168,7 @@ form input {
 }
 
 .banner-btn:hover {
-    background-color: var(--color0);
+    background-color: transparent;
     color: var(--color2);
     transition-duration: .11s;
     border-color: var(--color2);
@@ -304,7 +304,7 @@ form input {
 
 .form-control,
 .btn {
-    width: 40rem;
+    width: 100%;
     height: 4rem;
     margin: 0.8rem;
     border-radius: var(--border-radius);
@@ -341,7 +341,7 @@ form input {
 .sell {
     border: var(--border);
     background-color: var(--color0);
-    padding: 2rem 5rem;
+    padding: 2rem;
 }
 
 .sell,
@@ -385,8 +385,7 @@ form input {
 
 .sell input[type="number"] {
     margin: 0;
-    max-width: 20rem;
-    width: 100%;
+    width: 30rem;
 }
 
 .sell input[type="file"] {
@@ -528,11 +527,28 @@ input[type="submit"] {
 .auction {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 2rem;
     width: 100%;
     background-color: var(--color0);
     border: var(--border);
     margin: 2rem 0;
     padding: 2rem;
+}
+
+.auction-images {
+    grid-column: 1 / 2;
+    width: 100%;
+}
+
+.auction-bid-container {
+    grid-column: 2 / 3;
+    margin: auto;
+    width: 100%;
+}
+
+.auction-forms {
+    width: 80%;
 }
 
 .bid-form input[value="Place Bid"] {
@@ -592,6 +608,7 @@ input[type="submit"] {
 
 .auction-bid {
     justify-content: space-evenly;
+    text-align: center;
 }
 
 .auction-details {
@@ -610,7 +627,7 @@ input[type="submit"] {
     display: grid;
     gap: 1rem;
     grid-auto-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 12rem 1fr 1fr;
     margin: 1rem;
     min-height: 4rem;
 }
@@ -624,7 +641,7 @@ input[type="submit"] {
 }
 
 .auction-content {
-    grid-column: 2/6;
+    grid-column: 2/4;
 }
 
 .auction-bid-form .btn,
@@ -642,8 +659,9 @@ input[type="submit"] {
 .auction-images-big img {
     object-fit: scale-down;
     border-radius: 1rem;
+    width: 100%;
     height: 50rem;
-    width: 50rem;
+    max-width: 50rem;
     margin: 0.2rem;
 }
 
@@ -687,8 +705,20 @@ input[type="submit"] {
 }
 
 /* BIDS */
+.auction-label-bid {
+    grid-column: 1 / 2;
+}
+
+.auction-content-bid {
+    grid-column: 2/ 3;
+}
+
 .auction-date-bid {
-    grid-column: 3/6;
+    grid-column: 3/4;
+}
+
+.auction-bids {
+    text-align: center;
 }
 
 .auction-bids .auction-detail:first-child p {
@@ -744,9 +774,9 @@ input[type="submit"] {
     background-color: var(--color1)
 }
 
-
 .footer p,
 .footer a {
+    font-size: 1.5rem;
     color: var(--color0);
     font-weight: 600;
 }
@@ -758,4 +788,107 @@ input[type="submit"] {
 .footer a:hover {
     color: var(--color2);
     transition-duration: 0.11s;
+}
+
+
+/* MEDIA QUERY */
+
+/* MOBILE - SMARTPHONE */
+@media screen and (max-width: 480px) {
+
+    /* NAVBAR */
+    .nav-item-page {
+        font-size: 1.2rem;
+        margin: 0.4rem;
+    }
+
+    /* HOMEPAGE */
+    .banner-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 3fr;
+    }
+
+    .banner-homegarden {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    .banner-computer {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .banner-sport {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    .image-container p {
+        visibility: visible;
+        opacity: 1;
+
+    }
+
+    .items-container {
+        grid-template-columns: 1fr;
+    }
+
+    .banner-form {
+        top: 6rem;
+        left: 3rem;
+    }
+
+    .banner-btn {
+        font-size: 1.3rem;
+        background-color: transparent;
+        color: var(--color2);
+        padding: 1.5rem 0.8rem;
+        border: 4px solid var(--color2);
+    }
+
+    /* AUCTION */
+    .auction {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .auction-images {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    .auction-bid-container {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .item-title {
+        font-size: 3rem;
+    }
+
+    .item-price {
+        font-size: 2rem;
+    }
+
+    /* SELL */
+    .sell select[name="category"],
+    .sell input[type="number"] {
+        width: 100%
+    }
+
+    .uploaded-image img {
+        height: 15.3rem;
+        width: 15.3rem;
+    }
+
+    /* FOOTER */
+    .footer {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .footer p {
+        margin: 0.5rem;
+    }
+
 }
