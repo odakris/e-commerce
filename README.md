@@ -84,10 +84,29 @@ Install [Python](https://www.python.org/downloads/), then you can install [Djang
 python -m pip install Django
 ```
 
-Clone this repository and launch Wiki web app with :
+Then clone the repository from Github and switch to the new directory:
 
 ```
-python manage.py runserver
+$ git clone https://github.com/odakris/cs50w-commerce.git
+$ cd cs50w-commerce
+```
+
+Install required dependencies :
+
+```
+pip install -r requirements.txt
+```
+
+Then simply apply the migrations:
+
+```
+$ python manage.py migrate
+```
+
+You can now run the development server:
+
+```
+$ python manage.py runserver
 ```
 
 ## Credit
