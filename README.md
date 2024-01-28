@@ -8,6 +8,8 @@
 
 Video demo of **[Commerce](https://www.youtube.com/watch?v=WMQmilydvbs)**
 
+LIVE demo of **[Commerce](http://odakris.pythonanywhere.com/)**
+
 ## Description
 
 This is a eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist”. Instructions for completing this project can be found at https://cs50.harvard.edu/web/2020/projects/2/commerce/
