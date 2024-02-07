@@ -11,5 +11,10 @@
       "src": "/(.*)",
       "dest": "commerce/wsgi.py"
     }
-  ]
+  ],
+  "functions": {
+    "commerce/wsgi.py": {
+      "maxDuration": 30 
+    }
+  }
 }
