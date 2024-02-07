@@ -14,7 +14,7 @@
   ],
   "functions": {
     "commerce/wsgi.py": {
-      "maxDuration": 30 
+      "maxDuration": 300
     }
   }
 }
