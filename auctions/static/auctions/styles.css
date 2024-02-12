@@ -320,6 +320,7 @@ form input {
     flex-direction: column;
     margin: auto;
     width: 40rem;
+    height: 100%;
 }
 
 .connection-form {
@@ -329,6 +330,25 @@ form input {
 
 .connection-form input {
     width: 100%;
+}
+
+.logins {
+    margin-top: 5rem;
+    color: #757575;
+}
+
+.login {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.login-title,
+.login-data {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    font-style: italic;
 }
 
 .btn-disable {
@@ -609,7 +629,7 @@ input[type="submit"] {
 
 .auction-details,
 .auction-bid-details {
-    padding: 3rem;
+    padding: 1rem;
 }
 
 .auction-bid {
@@ -658,7 +678,7 @@ input[type="submit"] {
 }
 
 .auction-current-bid {
-    font-size: 6rem;
+    font-size: 5rem;
     margin: 2rem;
     color: red;
     font-weight: 600;
@@ -686,8 +706,7 @@ input[type="submit"] {
 
 .comment,
 .comment-details {
-    min-width: 50rem;
-    width: 50%;
+    max-width: 80%;
 }
 
 .comment {
@@ -718,11 +737,11 @@ input[type="submit"] {
 }
 
 .auction-content-bid {
-    grid-column: 2/ 3;
+    grid-column: 2 / 3;
 }
 
 .auction-date-bid {
-    grid-column: 3/4;
+    grid-column: 3 / 4;
 }
 
 .auction-bids {
@@ -804,8 +823,16 @@ input[type="submit"] {
 @media screen and (max-width: 600px) {
 
     /* NAVBAR */
-    .nav-item-page {
-        font-size: 1.2rem;
+    .nav-link-page {
+        font-size: 1rem;
+    }
+
+    .navbar-head h1 {
+        font-size: 4rem;
+    }
+
+    .navbar-head p {
+        font-size: 1.3rem;
     }
 
     /* LOGIN */
@@ -849,6 +876,16 @@ input[type="submit"] {
 
     .queued-images {
         height: 19rem;
+    }
+
+    .auction-detail p {
+        font-size: 1.3rem;
+    }
+
+    /* FOOTER */
+    .footer a,
+    .footer p {
+        font-size: 1.1rem;
     }
 }
 
