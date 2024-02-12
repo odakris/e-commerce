@@ -824,7 +824,13 @@ input[type="submit"] {
 
     /* NAVBAR */
     .nav-link-page {
-        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* NAVBAR */
+    .nav-item-page {
+        font-size: 1.25rem;
+        margin: 0.3rem;
     }
 
     .navbar-head h1 {
@@ -893,11 +899,7 @@ input[type="submit"] {
 /* TABLETS */
 @media screen and (max-width: 768px) {
 
-    /* NAVBAR */
-    .nav-item-page {
-        font-size: 1.25rem;
-        margin: 0.4rem;
-    }
+
 
     /* AUCTION */
     .auction {
